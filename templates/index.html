@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block main %}
+        <table class="table table-hover, p-3 mb-2 bg-success text-white">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>GameLevel</th>
+                <th>GameScore</th>
+                <th>scoreToNextLevel</th>
+                <th>CurrentGold</th>
+                <th>GameOver</th>
+                <th>GameTime</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+        <tr><td>{{game.userName}}</td><td>{{game.gameLevel}}</td><td>{{game.gameScore}}</td><td>{{game.scoreToNextLevel}}</td><td>{{game.currentGold}}</td><td>{{game.gameOver}}</td><td>{{game.gameTime}}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  {% endblock %}
