@@ -1,1 +1,2 @@
-# ACIT-2911-Agile-Project-G2
+How to use program:
+Pull code from repository and run app.py within a virtual workspace
