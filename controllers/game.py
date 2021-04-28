@@ -1,7 +1,7 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Zombie, GameState
+from models import Map, Sunflower, PeaShooter, Zombie, GameState, SnowPea
 from views import MainView
 from datetime import datetime
 import threading
@@ -19,6 +19,7 @@ class GameController(PygameController):
         self.map_list = []
         self.plants_list = []
         self.peabullet_list = []
+        self.icebullet_list = []
         self.zombie_list = []
         self.count_zombie = 0
         self.produce_zombie = 100
@@ -72,6 +73,8 @@ class GameController(PygameController):
                     plant.produce_money()
                 elif isinstance(plant, PeaShooter):
                     plant.shot()
+                elif isinstance(plant, SnowPea):
+                    plant.shot()
             else:
                 self.plants_list.remove(plant)
 
@@ -93,6 +96,15 @@ class GameController(PygameController):
             else:
                 self.peabullet_list.remove(b)
     
+    def load_icebullets(self):
+         for i in self.icebullet_list:
+            if i.live:
+                i.move_bullet()
+                i.hit_zombie()
+            else:
+                self.icebullet_list.remove(i)
+
+
     def events_handler(self):
         events = pygame.event.get()
         for e in events:
@@ -119,6 +131,12 @@ class GameController(PygameController):
                         self.plants_list.append(peashooter)
                         gamemap.can_grow = False
                         self.money -= 50
+            elif e.type == pygame.MOUSEWHEEL: 
+                if condition:
+                    snowpea = SnowPea(gamemap.position[0], gamemap.position[1], self, self.MainView)
+                    self.plants_list.append(snowpea)
+                    gamemap.can_grow = False
+                    self.money -= 70
 
     def start_game(self):
         self.MainView.init_window()
@@ -129,6 +147,7 @@ class GameController(PygameController):
             self.load_map()
             self.load_plants()
             self.load_peabullets()
+            self.load_icebullets()
             self.events_handler()
             self.load_zombies()
             self.count_zombie += 1

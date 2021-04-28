@@ -5,3 +5,4 @@ from .map import Map
 from .shooter import PeaShooter
 from .zombie import  Zombie
 from .gamestate import GameState
+from .snowpea import SnowPea
