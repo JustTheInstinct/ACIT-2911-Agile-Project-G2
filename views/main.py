@@ -1,4 +1,4 @@
-from models import Sunflower, PeaShooter
+from models import Sunflower, PeaShooter, SnowPea
 import pygame
 
 class MainView:
@@ -17,6 +17,7 @@ class MainView:
         self.display_plants()
         self.display_peabullets()
         self.display_zombies()
+        self.display_icebullets()
 
     def display_update(self):
         pygame.time.wait(10)
@@ -38,7 +39,14 @@ class MainView:
                     plant.display_sunflower()
                 elif isinstance(plant, PeaShooter):
                     plant.display_peashooter()
-
+                elif isinstance(plant, SnowPea):
+                    plant.display_snowpea()
+            
+    def display_icebullets(self):
+        for i in self.MainGame.icebullet_list:
+            if i.live:
+                i.display_icebullet()
+                
     def display_peabullets(self):
         for b in self.MainGame.peabullet_list:
             if b.live:
