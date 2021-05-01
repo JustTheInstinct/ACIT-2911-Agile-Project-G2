@@ -1,7 +1,7 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Zombie, GameState, SnowPea
+from models import Map, Sunflower, PeaShooter, Zombie, GameState, SnowPea, Wallnut
 from views import MainView
 from datetime import datetime
 import threading
@@ -137,6 +137,23 @@ class GameController(PygameController):
                     self.plants_list.append(snowpea)
                     gamemap.can_grow = False
                     self.money -= 70
+                        # If number 3 is pressed
+            elif e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_3:
+                    #trasnfer cordinate to position mark here, 
+                    x, y = pygame.mouse.get_pos()# // 80
+                    x = x // 80
+                    y = y // 80
+                    #y = e.pos[1] // 80
+                    
+                    #locate which piece of map that plyer mouse clicks 
+                    gamemap = self.map_list[y - 1][x]
+                    condition = gamemap.can_grow and self.money >= 100
+                    if condition:
+                        wallnut = Wallnut(gamemap.position[0], gamemap.position[1], self, self.MainView)
+                        self.plants_list.append(wallnut)
+                        gamemap.can_grow = False
+                        self.money -= 100
 
     def start_game(self):
         self.MainView.init_window()

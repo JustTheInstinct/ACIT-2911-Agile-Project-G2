@@ -6,3 +6,4 @@ from .shooter import PeaShooter
 from .zombie import  Zombie
 from .gamestate import GameState
 from .snowpea import SnowPea
+from .wallnut import Wallnut
