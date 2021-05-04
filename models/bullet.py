@@ -13,7 +13,6 @@ class PeaBullet(pygame.sprite.Sprite):
         self.MainView = MainView
 
     def move_bullet(self):
-
         if self.rect.x < 800:
             self.rect.x += self.speed
         else:
@@ -29,6 +28,7 @@ class PeaBullet(pygame.sprite.Sprite):
                     zombie.live = False
                     self.nextLevel()
 
+
     def nextLevel(self):
         self.MainGame.score += 20 # get 20 score for each zombie killed
         self.MainGame.remnant_score -=20
@@ -37,7 +37,6 @@ class PeaBullet(pygame.sprite.Sprite):
                     self.MainGame.remnant_score=100*i
                     self.MainGame.level+=1
                     self.MainGame.produce_zombie+=50
-
 
 
     def display_peabullet(self):

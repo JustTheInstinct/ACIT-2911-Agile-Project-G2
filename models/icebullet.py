@@ -13,7 +13,6 @@ class IceBullet(pygame.sprite.Sprite):
         self.MainView = MainView
 
     def move_bullet(self):
-
         if self.rect.x < 800:
             self.rect.x += self.speed
         else:
@@ -25,7 +24,7 @@ class IceBullet(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self,zombie):
                 self.live = False
                 zombie.hp -= self.damage
-                zombie.speed -= 0.2
+                zombie.speed *= 0.9
                 if zombie.hp <= 0:
                     zombie.live = False
                     self.nextLevel()

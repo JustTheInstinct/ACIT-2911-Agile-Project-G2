@@ -1,11 +1,12 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Zombie, GameState, SnowPea, Wallnut
+from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead
 from views import MainView
-from datetime import datetime
+from datetime import datetime, time
 import threading
 import requests
+import time
 
 class GameController(PygameController):
     #I set the default money 200, it might be too much, LOL easy game....
@@ -47,15 +48,20 @@ class GameController(PygameController):
                 column_map_list.append(gamemap)
             self.map_list.append(column_map_list)
 
+
     def init_zombies(self):
         """Spawn zombies in random lane and at least 200 away from map, it gives players 
         some time to plant sunflower first, since I only draw a 800*560 pygame interface
         player may not see zombies when it spawns. Once it walks in to my interface,
         player can see it """
         for i in range(1, 7):
-            dis = random.randint(1, 5) * 200 
-            zombie = Zombie(800+ dis, i * 80, self, self.MainView)
-            self.zombie_list.append(zombie)
+            normaldis = random.randint(1,3) * 200
+            normalzombie = Norzombie(800+ normaldis, i * 80, self, self.MainView)
+            self.zombie_list.append(normalzombie)
+
+            bucketdis = random.randint(3,5) * 200
+            buckethead = Buckethead(800+ bucketdis, i * 80, self, self.MainView)
+            self.zombie_list.append(buckethead)
 
 ###-------create part done-------------------------------------
 
@@ -87,7 +93,7 @@ class GameController(PygameController):
             else:
                 self.zombie_list.remove(zombie)
 
-    def load_peabullets(self):
+    def load_bullets(self):
         """check bullet status, then take action. if it is dead, remove from bullet list."""
         for b in self.peabullet_list:
             if b.live:
@@ -95,9 +101,8 @@ class GameController(PygameController):
                 b.hit_zombie()
             else:
                 self.peabullet_list.remove(b)
-    
-    def load_icebullets(self):
-         for i in self.icebullet_list:
+
+        for i in self.icebullet_list:
             if i.live:
                 i.move_bullet()
                 i.hit_zombie()
@@ -110,50 +115,47 @@ class GameController(PygameController):
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
-            elif e.type == pygame.MOUSEBUTTONDOWN: 
+
+            elif e.type == pygame.KEYDOWN:
+
                 #trasnfer cordinate to position mark here, 
-                x = e.pos[0] // 80
-                y = e.pos[1] // 80
-                
+                x, y = pygame.mouse.get_pos()# // 80
+                x = x // 80
+                y = y // 80
                 #locate which piece of map that plyer mouse clicks 
                 gamemap = self.map_list[y - 1][x]
-
-                condition = gamemap.can_grow and self.money >= 50 # if that square can grow and you have at least 50 gold
-                if e.button == 1:   #left button sunflower
+               
+                if e.key == pygame.K_1: #create sunflower
+                    condition = gamemap.can_grow and self.money >= 50
                     if condition:
                         sunflower = Sunflower(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(sunflower)
                         gamemap.can_grow = False
                         self.money -= 50
-                elif e.button == 3: # right button shooter
+
+                if e.key == pygame.K_2: #create peashooter
+                    condition = gamemap.can_grow and self.money >= 50
                     if condition:
                         peashooter = PeaShooter(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(peashooter)
                         gamemap.can_grow = False
                         self.money -= 50
-            elif e.type == pygame.MOUSEWHEEL: 
-                if condition:
-                    snowpea = SnowPea(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                    self.plants_list.append(snowpea)
-                    gamemap.can_grow = False
-                    self.money -= 70
-                        # If number 3 is pressed
-            elif e.type == pygame.KEYDOWN:
-                if e.key == pygame.K_3:
-                    #trasnfer cordinate to position mark here, 
-                    x, y = pygame.mouse.get_pos()# // 80
-                    x = x // 80
-                    y = y // 80
-                    #y = e.pos[1] // 80
-                    
-                    #locate which piece of map that plyer mouse clicks 
-                    gamemap = self.map_list[y - 1][x]
-                    condition = gamemap.can_grow and self.money >= 100
+                
+                if e.key == pygame.K_3: #create snowpea
+                    condition = gamemap.can_grow and self.money >= 60
+                    if condition:
+                        snowpea = SnowPea(gamemap.position[0], gamemap.position[1], self, self.MainView)
+                        self.plants_list.append(snowpea)
+                        gamemap.can_grow = False
+                        self.money -= 60
+
+                if e.key == pygame.K_4: #create walnut
+                    condition = gamemap.can_grow and self.money >= 50
                     if condition:
                         wallnut = Wallnut(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(wallnut)
                         gamemap.can_grow = False
-                        self.money -= 100
+                        self.money -= 50
 
     def start_game(self):
         self.MainView.init_window()
@@ -163,8 +165,7 @@ class GameController(PygameController):
         while not self.GAMEOVER: # I try to use while loop refresh game, to process objects movement and action
             self.load_map()
             self.load_plants()
-            self.load_peabullets()
-            self.load_icebullets()
+            self.load_bullets()
             self.events_handler()
             self.load_zombies()
             self.count_zombie += 1

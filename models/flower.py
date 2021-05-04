@@ -15,7 +15,7 @@ class Sunflower(Plant):
     def produce_money(self):
         self.time_count += 1
         if self.time_count == 25:
-            self.MainGame.money += 5
+            self.MainGame.money += 10
             self.time_count = 0
 
     def display_sunflower(self):

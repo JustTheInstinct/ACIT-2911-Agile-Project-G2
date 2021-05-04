@@ -10,7 +10,7 @@ class SnowPea(Plant):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.price = 70
+        self.price = 60
         self.hp = 200
         self.shot_count = 0
 

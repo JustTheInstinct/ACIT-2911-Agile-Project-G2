@@ -25,9 +25,9 @@ class MainView:
 
     def display_stat(self):
         self.window.fill((255, 255, 255))
-        self.window.blit(self.draw_text('    GOLD$: {}'.format(self.MainGame.money), 26, (255, 0, 0)), (500, 40))
+        self.window.blit(self.draw_text('GOLD$: {}'.format(self.MainGame.money), 26, (255, 0, 0)), (550, 40))
         self.window.blit(self.draw_text(
-            'Level:{}, Score: {}, You still need {} points to reach next level'.format(self.MainGame.level, self.MainGame.score, self.MainGame.remnant_score),
+            'Level:{}, Score: {}, You still need {} points to reach next level   '.format(self.MainGame.level, self.MainGame.score, self.MainGame.remnant_score),
             26,
             (255, 0, 0)), (5, 40))
 
@@ -66,8 +66,10 @@ class MainView:
                 map.load_map()
 
     def display_help_text(self):
-        text1 = self.draw_text('INSTRUCTION: 1. Left Button to create Sunflowers 2.Right Button to create PeaShooter', 20, (255, 0, 0))
+        text1 = self.draw_text('INSTRUCTION: Move your mouse to empty field, use keyboard number keys to create plants', 20, (255, 0, 0))
+        text2 = self.draw_text('Num 1 - Sunflowers | Num 2 - PeaShooter | Num 3 - Snowpea | Num 4 - Walnut', 20, (255, 0, 0))
         self.window.blit(text1, (5, 5))
+        self.window.blit(text2, (5, 20))
 
 
     def draw_text(self, content, size, color):

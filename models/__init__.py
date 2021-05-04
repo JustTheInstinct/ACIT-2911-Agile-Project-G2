@@ -7,3 +7,5 @@ from .zombie import  Zombie
 from .gamestate import GameState
 from .snowpea import SnowPea
 from .wallnut import Wallnut
+from .buckethead import Buckethead
+from .normalzombie import Norzombie
