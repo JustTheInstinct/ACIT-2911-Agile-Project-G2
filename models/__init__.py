@@ -6,6 +6,7 @@ from .shooter import PeaShooter
 from .zombie import  Zombie
 from .gamestate import GameState
 from .snowpea import SnowPea
+from .lychee_bomb import LycheeBomb
 from .wallnut import Wallnut
 from .buckethead import Buckethead
 from .normalzombie import Norzombie

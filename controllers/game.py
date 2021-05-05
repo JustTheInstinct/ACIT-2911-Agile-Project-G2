@@ -1,7 +1,7 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead
+from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead, LycheeBomb
 from views import MainView
 from datetime import datetime, time
 import threading
@@ -21,6 +21,8 @@ class GameController(PygameController):
         self.plants_list = []
         self.peabullet_list = []
         self.icebullet_list = []
+        self.explosion_list = []
+        self.lycheespike_list = []
         self.zombie_list = []
         self.count_zombie = 0
         self.produce_zombie = 100
@@ -109,6 +111,21 @@ class GameController(PygameController):
             else:
                 self.icebullet_list.remove(i)
 
+    def load_explosions(self):
+        """ Checks explosion status and takes action. Since explosion is instant, it is removed quickly """
+        for explosion in self.explosion_list:
+            if explosion.live:
+                explosion.hit_zombie()
+            else:
+                self.explosion_list.remove(explosion)
+    
+    def load_lycheespikes(self):
+        for spike in self.lycheespike_list:
+            if spike.live:
+                spike.move_spike()
+                spike.hit_zombie()
+            else:
+                self.lycheespike_list.remove(spike)
 
     def events_handler(self):
         events = pygame.event.get()
@@ -156,6 +173,14 @@ class GameController(PygameController):
                         self.plants_list.append(wallnut)
                         gamemap.can_grow = False
                         self.money -= 50
+                
+                if e.key == pygame.K_5: #create Lychee Bomb
+                    condition = gamemap.can_grow and self.money >= 150
+                    if condition:
+                        lychee = LycheeBomb(gamemap.position[0], gamemap.position[1], self, self.MainView)
+                        self.plants_list.append(lychee)
+                        gamemap.can_grow = False
+                        self.money -= 150
 
     def start_game(self):
         self.MainView.init_window()
@@ -166,6 +191,8 @@ class GameController(PygameController):
             self.load_map()
             self.load_plants()
             self.load_bullets()
+            self.load_explosions()
+            self.load_lycheespikes()
             self.events_handler()
             self.load_zombies()
             self.count_zombie += 1
