@@ -24,7 +24,7 @@ def to_dict(player):
     return player_state
 
 app = Flask(__name__)
-
+##### Rewrite #############################
 @app.route('/')
 def index():
     return render_template("index.html", games=[to_dict(player)])
@@ -42,7 +42,7 @@ def update_game_state():
                                data["scoreToNextLevel"], data["currentGold"], data["gameOver"], data["gameTime"])
         users_game_states[data["userName"]] = game_state
     return jsonify({"status": "success"})
-
+################# Rewrite #########################
 
 def start_game():
     game = GameController(player)

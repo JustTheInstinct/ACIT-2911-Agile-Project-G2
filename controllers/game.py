@@ -3,13 +3,12 @@ import pygame
 import random
 from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead
 from views import MainView
-from datetime import datetime, time
+from datetime import datetime
 import threading
 import requests
-import time
+
 
 class GameController(PygameController):
-    #I set the default money 200, it might be too much, LOL easy game....
     def __init__(self, username):
         self.userName = username
         self.level = 1
@@ -29,7 +28,6 @@ class GameController(PygameController):
         self.sendGameStat()
 
     def init_plant_points(self):
-        #I decide to create a 10 * 7 box,  
         for y in range(1, 7):
             points = []
             for x in range(10):
@@ -59,7 +57,7 @@ class GameController(PygameController):
             normalzombie = Norzombie(800+ normaldis, i * 80, self, self.MainView)
             self.zombie_list.append(normalzombie)
 
-            bucketdis = random.randint(3,5) * 200
+            bucketdis = random.randint(12,20) * 50
             buckethead = Buckethead(800+ bucketdis, i * 80, self, self.MainView)
             self.zombie_list.append(buckethead)
 
@@ -177,6 +175,7 @@ class GameController(PygameController):
 
     def endgame(self):
         self.MainView.window.blit(self.MainView.draw_text('GAMEOVER', 50, (255, 0, 0)), (300, 200))
+        pygame.display.flip()
         pygame.time.wait(400)
         self.GAMEOVER = True
         self.sendGameStat()

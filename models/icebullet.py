@@ -24,7 +24,7 @@ class IceBullet(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self,zombie):
                 self.live = False
                 zombie.hp -= self.damage
-                zombie.speed *= 0.9
+                zombie.speed -= 0.6
                 if zombie.hp <= 0:
                     zombie.live = False
                     self.nextLevel()

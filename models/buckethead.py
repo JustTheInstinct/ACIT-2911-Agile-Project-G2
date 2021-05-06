@@ -1,6 +1,7 @@
 import pygame
 from .zombie import Zombie
 
+
 class Buckethead(Zombie):
     def __init__(self,x,y, MainGame, MainView):
         super(Buckethead, self).__init__(MainGame, MainView)
@@ -8,7 +9,7 @@ class Buckethead(Zombie):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.hp = 1000
+        self.hp = 700
         self.damage = 2
         self.speed = 1
         self.live = True
@@ -21,11 +22,13 @@ class Buckethead(Zombie):
             if self.rect.x < -80:
                 self.MainGame.endgame()
 
+
     def hit_plant(self):
         for plant in self.MainGame.plants_list:
             if pygame.sprite.collide_rect(self,plant):
                 self.stop = True
                 self.eat_plant(plant)
+
 
     def eat_plant(self,plant):
         plant.hp -= self.damage
@@ -36,6 +39,7 @@ class Buckethead(Zombie):
             map.can_grow = True
             plant.live = False
             self.stop = False
+
 
     def display_zombie(self):
         self.MainView.window.blit(self.image, self.rect)

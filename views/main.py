@@ -5,10 +5,12 @@ class MainView:
     def __init__(self, MainGame):
         self.MainGame = MainGame
 
+
     def init_window(self):
         pygame.display.init()
         pygame.display.set_caption('Plants VS Zombies')
         self.window = pygame.display.set_mode([800, 560])
+
 
     def display(self):
         self.display_stat()
@@ -19,17 +21,17 @@ class MainView:
         self.display_zombies()
         self.display_icebullets()
 
+
     def display_update(self):
         pygame.time.wait(10)
         pygame.display.update()
+
 
     def display_stat(self):
         self.window.fill((255, 255, 255))
         self.window.blit(self.draw_text('GOLD$: {}'.format(self.MainGame.money), 26, (255, 0, 0)), (550, 40))
         self.window.blit(self.draw_text(
-            'Level:{}, Score: {}, You still need {} points to reach next level   '.format(self.MainGame.level, self.MainGame.score, self.MainGame.remnant_score),
-            26,
-            (255, 0, 0)), (5, 40))
+            'Level:{}, Score: {}, You still need {} points to reach next level   '.format(self.MainGame.level, self.MainGame.score, self.MainGame.remnant_score), 26, (255, 0, 0)), (5, 40))
 
 
     def display_plants(self):
@@ -43,12 +45,14 @@ class MainView:
                     plant.display_snowpea()
                 elif isinstance(plant, Wallnut):
                     plant.display_wallnut()
-            
+
+
     def display_icebullets(self):
         for i in self.MainGame.icebullet_list:
             if i.live:
                 i.display_icebullet()
-                
+
+
     def display_peabullets(self):
         for b in self.MainGame.peabullet_list:
             if b.live:
@@ -58,12 +62,13 @@ class MainView:
         for zombie in self.MainGame.zombie_list:
             if zombie.live:
                 zombie.display_zombie()
-                
-    
+
+
     def display_map(self):
         for temp_map_list in self.MainGame.map_list:
             for map in temp_map_list:
                 map.load_map()
+
 
     def display_help_text(self):
         text1 = self.draw_text('INSTRUCTION: Move your mouse to empty field, use keyboard number keys to create plants', 20, (255, 0, 0))
@@ -77,4 +82,3 @@ class MainView:
         font = pygame.font.SysFont('SFNT', size)
         text = font.render(content, True, color)
         return text
-
