@@ -13,7 +13,6 @@ class LycheeSpike(pygame.sprite.Sprite):
         self.MainView = MainView
 
     def move_spike(self):
-
         if self.rect.x < 800:
             self.rect.x += self.speed
         else:

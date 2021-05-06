@@ -1,4 +1,4 @@
-from models import Sunflower, PeaShooter, SnowPea, Wallnut
+from models import Sunflower, PeaShooter, SnowPea, Wallnut, LycheeBomb
 import pygame
 
 class MainView:
@@ -16,6 +16,7 @@ class MainView:
         self.display_map()
         self.display_plants()
         self.display_peabullets()
+        self.display_lycheespikes()
         self.display_zombies()
         self.display_icebullets()
 
@@ -43,6 +44,8 @@ class MainView:
                     plant.display_snowpea()
                 elif isinstance(plant, Wallnut):
                     plant.display_wallnut()
+                elif isinstance(plant, LycheeBomb):
+                    plant.display_lychee_bomb()
             
     def display_icebullets(self):
         for i in self.MainGame.icebullet_list:
@@ -54,12 +57,16 @@ class MainView:
             if b.live:
                 b.display_peabullet()
 
+    def display_lycheespikes(self):
+        for spike in self.MainGame.lycheespike_list:
+            if spike.live:
+                spike.display_lycheespike()
+
     def display_zombies(self):
         for zombie in self.MainGame.zombie_list:
             if zombie.live:
                 zombie.display_zombie()
                 
-    
     def display_map(self):
         for temp_map_list in self.MainGame.map_list:
             for map in temp_map_list:

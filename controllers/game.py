@@ -83,6 +83,8 @@ class GameController(PygameController):
                     plant.shot()
                 elif isinstance(plant, SnowPea):
                     plant.shot()
+                elif isinstance(plant, LycheeBomb):
+                    plant.explode()
             else:
                 self.plants_list.remove(plant)
 
@@ -110,6 +112,13 @@ class GameController(PygameController):
                 i.hit_zombie()
             else:
                 self.icebullet_list.remove(i)
+        
+        for spike in self.lycheespike_list:
+            if spike.live:
+                spike.move_spike()
+                spike.hit_zombie()
+            else:
+                self.lycheespike_list.remove(spike)
 
     def load_explosions(self):
         """ Checks explosion status and takes action. Since explosion is instant, it is removed quickly """
@@ -118,14 +127,6 @@ class GameController(PygameController):
                 explosion.hit_zombie()
             else:
                 self.explosion_list.remove(explosion)
-    
-    def load_lycheespikes(self):
-        for spike in self.lycheespike_list:
-            if spike.live:
-                spike.move_spike()
-                spike.hit_zombie()
-            else:
-                self.lycheespike_list.remove(spike)
 
     def events_handler(self):
         events = pygame.event.get()
@@ -192,7 +193,6 @@ class GameController(PygameController):
             self.load_plants()
             self.load_bullets()
             self.load_explosions()
-            self.load_lycheespikes()
             self.events_handler()
             self.load_zombies()
             self.count_zombie += 1
