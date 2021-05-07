@@ -24,7 +24,7 @@ def to_dict(player):
     return player_state
 
 app = Flask(__name__)
-##### Rewrite #############################
+##### Rewrite needed #############################
 @app.route('/')
 def index():
     return render_template("index.html", games=[to_dict(player)])

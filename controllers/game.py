@@ -1,12 +1,11 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead, LycheeBomb
+from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, newspaper
 from views import MainView
 from datetime import datetime
 import threading
 import requests
-
 
 class GameController(PygameController):
     def __init__(self, username):
@@ -54,14 +53,25 @@ class GameController(PygameController):
         some time to plant sunflower first, since I only draw a 800*560 pygame interface
         player may not see zombies when it spawns. Once it walks in to my interface,
         player can see it """
+        time_count = 0
         for i in range(1, 7):
             normaldis = random.randint(1,3) * 200
-            normalzombie = Norzombie(800+ normaldis, i * 80, self, self.MainView)
-            self.zombie_list.append(normalzombie)
-
+            normalzombie = Norzombie(800 + normaldis, i * 80, self, self.MainView)
             bucketdis = random.randint(12,20) * 50
-            buckethead = Buckethead(800+ bucketdis, i * 80, self, self.MainView)
-            self.zombie_list.append(buckethead)
+            buckethead = Buckethead(800 + bucketdis, i * 80, self, self.MainView)
+            newsdis = random.randint(2,5) * 100
+            newspaper = Newspaper(800 + newsdis, i * 80, self, self.MainView)
+            news = time_count // 5
+            buck = time_count // 10
+            if news != 0 or buck != 0 or time_count == 0:
+                self.zombie_list.append(normalzombie)
+                time_count += 1
+            if news == 0:
+                self.zombie_list.append(newspaper)
+                time_count += 1
+            if buck // 10 == 0:
+                self.zombie_list.append(buckethead)
+                time_count += 2
 
 ###-------create part done-------------------------------------
 
@@ -83,6 +93,8 @@ class GameController(PygameController):
                     plant.shot()
                 elif isinstance(plant, LycheeBomb):
                     plant.explode()
+                elif isinstance(plant, Wallnut):
+                    plant.crack()
             else:
                 self.plants_list.remove(plant)
 
@@ -90,6 +102,10 @@ class GameController(PygameController):
         """Check zombie status, then take action, if it is dead, remove from zombies list"""
         for zombie in self.zombie_list:
             if zombie.live:
+                if isinstance(zombie, Buckethead):
+                    zombie.losehead()
+                if isinstance(zombie, Newspaper):
+                    zombie.losepaper()
                 zombie.move_zombie()
                 zombie.hit_plant()
             else:
@@ -201,7 +217,7 @@ class GameController(PygameController):
             self.MainView.display_update()
 
     def endgame(self):
-        self.MainView.window.blit(self.MainView.draw_text('GAMEOVER', 50, (255, 0, 0)), (300, 200))
+        self.MainView.window.blit(self.MainView.draw_text('GAMEOVER', 100, (255, 0, 0)), (200, 200))
         pygame.display.flip()
         pygame.time.wait(1000)
         self.GAMEOVER = True

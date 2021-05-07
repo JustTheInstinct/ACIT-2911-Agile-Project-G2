@@ -14,3 +14,9 @@ class Wallnut(Plant):
 
     def display_wallnut(self):
         self.MainView.window.blit(self.image,self.rect)
+
+    def crack(self):
+        if self.hp == 300:
+            self.image = pygame.image.load('./imgs/cracked.png')
+        if self.hp == 100:
+            self.image = pygame.image.load('./imgs/broken.png')

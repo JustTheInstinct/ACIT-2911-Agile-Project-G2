@@ -10,3 +10,4 @@ from .lychee_bomb import LycheeBomb
 from .wallnut import Wallnut
 from .buckethead import Buckethead
 from .normalzombie import Norzombie
+from .newspaper import Newspaper
