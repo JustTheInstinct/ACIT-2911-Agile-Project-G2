@@ -21,6 +21,8 @@ class LycheeBomb(Plant):
         if self.live and should_explode:
             # Plant lives for 30 frames before exploding
             self.frame_timer += 1
+            if self.frame_timer == 27:
+                self.image = pygame.image.load('./imgs/explosion.png')
             if self.frame_timer == 30:
                 explosion = Explode(self, self.MainGame, self.MainView)
                 spike = LycheeSpike(self, self.MainGame, self.MainView)
@@ -35,6 +37,7 @@ class LycheeBomb(Plant):
                 b = self.rect.x // 80
                 map = self.MainGame.map_list[a][b]
                 map.can_grow = True
+                
                 self.live = False
 
     def display_lychee_bomb(self):

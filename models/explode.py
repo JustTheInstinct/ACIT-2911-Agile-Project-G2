@@ -5,7 +5,6 @@ class Explode(pygame.sprite.Sprite):
         self.live = True
         self.image = pygame.image.load('./imgs/explosion.png')
         self.damage = 2500
-        #self.speed  = 10
         self.rect = self.image.get_rect()
         self.rect.x = lychee_bomb.rect.x - 80
         self.rect.y = lychee_bomb.rect.y - 80
@@ -29,7 +28,6 @@ class Explode(pygame.sprite.Sprite):
                     self.MainGame.remnant_score=100*i
                     self.MainGame.level+=1
                     self.MainGame.produce_zombie+=50
-
 
 
     def display_explosion(self):
