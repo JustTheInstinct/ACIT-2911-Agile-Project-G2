@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding-left: 0rem;
+    font-size: 40px;
+    font-family: 'Pangolin', cursive;
+    color: #faf4ed;
+    text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+body {
+    background-image: url('../images/day.png');
+    background-repeat: repeat;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #8FBC8F;
+    height: 125px;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.navbar ul {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    display:inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 2rem;
+}
+
+.zombieTable {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 90%;
+    width: 90%;
+    background-color: #8FBC8F;
+}
+
+table {
+    border: 2px solid black;
+    width: 100%;
+}
+
+th {
+    border: 2px solid black;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+td img {
+    vertical-align: middle;
+}
+
+td {
+    border: 2px solid black;
+    text-align: center;
+    font-size: 25px;
+}
+
+.plantTable {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 90%;
+    width: 90%;
+    background-color: #8FBC8F;
+}

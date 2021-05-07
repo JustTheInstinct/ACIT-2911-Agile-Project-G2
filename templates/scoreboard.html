@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/scoreboard_styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <title>Scoreboard</title>
+</head>
+<body class='container'>
+    <nav class='navbox'>
+        <ul class='navmenu'>
+            <li><a href=home.html>Home</a></li>
+            <li><a href=scoreboard.html>Scoreboard</a></li>
+            <li><a href=about.html>About</a></li>
+        </ul>
+    </nav>
+    <div class='title'>PLANTS VS ZOMBIES</div>
+    <div class='scoreboardHeader'>Scoreboard</div>
+    <table class="scoreboard">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>GameLevel</th>
+                <th>GameScore</th>
+                <th>scoreToNextLevel</th>
+                <th>CurrentGold</th>
+                <th>GameOver</th>
+                <th>GameTime</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+            <tr>
+                <td>{{game.userName}}</td>
+                <td>{{game.gameLevel}}</td>
+                <td>{{game.gameScore}}</td>
+                <td>{{game.scoreToNextLevel}}</td>
+                <td>{{game.currentGold}}</td>
+                <td>{{game.gameOver}}</td>
+                <td>{{game.gameTime}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <footer>ACIT 2911 - Group 2</footer>
+</body>
+</html>
