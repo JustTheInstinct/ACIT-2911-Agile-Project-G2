@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/home_styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <title>Home</title>
 </head>
 <body class='container'>
@@ -16,6 +16,16 @@
             <li><a href=scoreboard.html>Scoreboard</a></li>
             <li><a href=about.html>About</a></li>
         </ul>
+    </div>
+    <div class='howTo'>
+        How to install and play:
+        <ol>
+            <li>In powershell, cd to the game directory</li>
+            <li>Run 'python app.py [name]' in the console, replacing [name] with your name</li>
+            <li>Install any python modules that you may be missing using 'pip install [module], replacing [module] with whatever module the console says you're missing</li>
+            <li>Repeat steps 2 and 3 until you're no longer missing any modules</li>
+            <li>Use the number keys to place plants and survive for as long as you can!</li>
+        </ol>
     </div>
     <div class='plantTable'>
         <table>
@@ -47,6 +57,11 @@
                     <td><img src='../imgs/wall_nut.png'></td>
                     <td>Blocks zombies.</td>
                 </tr>
+                <tr>
+                    <td>Lychee Bomb</td>
+                    <td><img src='../imgs/lychee_bomb.png'></td>
+                    <td>Explodes and damages zombies in a 9x9 square.</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -64,6 +79,16 @@
                     <td>Regular</td>
                     <td><img src='../imgs/zombie.png'></td>
                     <td>Just a regular zombie.</td>
+                </tr>
+                <tr>
+                    <td>Buckethead</td>
+                    <td><img src='../imgs/buckethead.png'></td>
+                    <td>A tankier zombie! Loses its bucket helmet at 80% health and its head at 20%.</td>
+                </tr>
+                <tr>
+                    <td>Newspaper</td>
+                    <td><img src='../imgs/newspaper.png'></td>
+                    <td>Speeds up after its newspaper is destroyed.</td>
                 </tr>
             </tbody>
         </table>
