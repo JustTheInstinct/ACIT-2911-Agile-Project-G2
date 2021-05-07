@@ -1,18 +1,18 @@
 import pygame
 
-class IceBullet(pygame.sprite.Sprite):
-    def __init__(self,snowpea, MainGame, MainView):
+class LycheeSpike(pygame.sprite.Sprite):
+    def __init__(self, lychee_bomb, MainGame, MainView):
         self.live = True
-        self.image = pygame.image.load('./imgs/icebullet.png')
-        self.damage = 10
-        self.speed  = 3
+        self.image = pygame.image.load('./imgs/lychee_spike.png') # Change this
+        self.damage = 500
+        self.speed  = 15
         self.rect = self.image.get_rect()
-        self.rect.x = snowpea.rect.x + 60
-        self.rect.y = snowpea.rect.y + 15
+        self.rect.x = lychee_bomb.rect.x + 60
+        self.rect.y = lychee_bomb.rect.y + 15
         self.MainGame = MainGame
         self.MainView = MainView
 
-    def move_bullet(self):
+    def move_spike(self):
         if self.rect.x < 800:
             self.rect.x += self.speed
         else:
@@ -24,8 +24,6 @@ class IceBullet(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self,zombie):
                 self.live = False
                 zombie.hp -= self.damage
-                if zombie.speed >= 0:
-                    zombie.speed -= 0.6
                 if zombie.hp <= 0:
                     zombie.live = False
                     self.nextLevel()
@@ -39,5 +37,7 @@ class IceBullet(pygame.sprite.Sprite):
                     self.MainGame.level+=1
                     self.MainGame.produce_zombie+=50
 
-    def display_icebullet(self):
+
+
+    def display_lycheespike(self):
         self.MainView.window.blit(self.image,self.rect)

@@ -7,9 +7,9 @@ import sys
 
 
 player = sys.argv[1]
-users_game_states = {}      #this a dict store all players score
+users_game_states = {}      # this a dict store all players score
 gamestates = GameState(player, 0, 0, 0, 0, False, datetime.now())
-users_game_states[player] = gamestates #I ask player enter name and store it as key
+users_game_states[player] = gamestates # I ask player enter name and store it as key
 
 def to_dict(player):
     player_state = {}
