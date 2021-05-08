@@ -1,0 +1,27 @@
+BCIT Agile Project:
+Group 2
+PvZ python version
+
+Supervisor: 
+Tim Guicherd 
+Motasem Aldiab
+
+Product Owner: 
+Di Gao
+
+Scrum Master: 
+Tama Irman
+
+Developer:
+Jordan Gavinchuk
+Markus Chung
+Nicholas Chu
+
+This game is only
+for Agile Project
+practice use.
+
+Please contact us
+if you think we 
+infringe your 
+copyright
