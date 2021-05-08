@@ -231,7 +231,7 @@ class GameController(PygameController):
                     elif 282 < x < 400 and 303 < y < 369: # scoreboard
                         webbrowser.open_new("http://127.0.0.1:5000/scoreboard")
                     elif 591 < x < 687 and 337 < y < 372: # about
-                        webbrowser.open_new("http://127.0.0.1:5000/about")
+                        self.aboutus()
                     elif 112 < x < 257 and 348 < y < 413: # Homepage
                         webbrowser.open_new("http://127.0.0.1:5000")
                 elif event.type == pygame.QUIT:
@@ -240,66 +240,38 @@ class GameController(PygameController):
 
 
     def aboutus(self):
-        pygame.init()
-screen=pygame.display.set_mode([800,600])
+        team_members = '''
+        Jordan G
+        Tama I
+        Markus
+        Nick
+        Di
+        '''
+        centerx, centery = self.MainView.window.get_rect().centerx, self.MainView.window.get_rect().centery
+        startpos  = centery + 50  # adjust so it goes below window to start
+        running =True
+        while running:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    running = False
+                self.MainView.window.fill(0)
+                startpos -= 1
+                i=0
+                name_list=[]
+                position_list=[]
+                font = pygame.font.SysFont('Courier', 30)
 
-red = (255,0,0)
-green = (0,255,0)
-blue = (0,0,255)
-darkBlue = (0,0,128)
-white = (255,255,255)
-black = (0,0,0)
-pink = (255,200,200)
-
-#closing credits or end credits are a list of the movie cast or crew
-movie_credits = '''
-This video showing how to scroll text
-using python coding
-has been made by
-HAPPY CHUCK PROGRAMMING Channel.
-Please support us by clicking Subscribe
-Thank you all for watching
-'''
-
-
-centerx, centery = screen.get_rect().centerx, screen.get_rect().centery
-deltaY = centery + 50  # adjust so it goes below screen start
-
-
-running =True
-while running:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            running = False
-
-    screen.fill(0)
-    deltaY-= 1
-    i=0
-    msg_list=[]
-    pos_list=[]
-     
-    font = pygame.font.SysFont('Courier', 30)
-
-    #msg = font.render('Hello there, how are you?', True, red)
-    for line in movie_credits.split('\n'):
-        msg=font.render(line, True, red)
-        msg_list.append(msg)
-        pos= msg.get_rect(center=(centerx, centery+deltaY+30*i))
-        pos_list.append(pos)
-        i=i+1
-   
-    #pos = msg.get_rect(center=(centerx, centery+deltaY))
-    
-
-    #if (centery + deltaY < 0):
-    #   running = False         # no repetition - once text scrolls up past screen, over 
+            for member in team_members.split('\n'):
+                name = font.render(line, True, white)
+                name_list.append(name)
+                position = name.get_rect( center = (centerx, centery + startpos + 30 * i ))
+                position_list.append(position)
+                i += 1
         
-    #screen.blit(msg, pos)
-    for j in range(i):
-        screen.blit(msg_list[j], pos_list[j])
-        
-    pygame.display.update()
-pygame.quit()
+            for j in range(i):
+                self.MainView.window.blit(name_list[j], position_list[j])     
+                pygame.display.update()
+
 
     def endgame(self):
         self.GAMEOVER = True
