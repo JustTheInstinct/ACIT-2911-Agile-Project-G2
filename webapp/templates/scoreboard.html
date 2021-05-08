@@ -11,9 +11,9 @@
 <body class='container'>
     <nav class='navbox'>
         <ul class='navmenu'>
-            <li><a href=home.html>Home</a></li>
-            <li><a href=scoreboard.html>Scoreboard</a></li>
-            <li><a href=about.html>About</a></li>
+            <li><a href="{{ url_for('.home') }}">Home</a></li>
+            <li><a href="{{ url_for('.score') }}">Scoreboard</a></li>
+            <li><a href="{{ url_for('.about') }}">About</a></li>
         </ul>
     </nav>
     <div class='title'>PLANTS VS ZOMBIES</div>
@@ -21,25 +21,19 @@
     <table class="scoreboard">
         <thead>
             <tr>
-                <th>UserName</th>
-                <th>GameLevel</th>
-                <th>GameScore</th>
-                <th>scoreToNextLevel</th>
-                <th>CurrentGold</th>
-                <th>GameOver</th>
-                <th>GameTime</th>
+                <th>Name</th>
+                <th>id</th>
+                <th>level</th>
+                <th>score</th>
             </tr>
         </thead>
         <tbody>
-            {% for game in games %}
+            {% for score in scores %}
             <tr>
-                <td>{{game.userName}}</td>
-                <td>{{game.gameLevel}}</td>
-                <td>{{game.gameScore}}</td>
-                <td>{{game.scoreToNextLevel}}</td>
-                <td>{{game.currentGold}}</td>
-                <td>{{game.gameOver}}</td>
-                <td>{{game.gameTime}}</td>
+                <td>{{score.name}}</td>
+                <td>{{score.id}}</td>
+                <td>{{score.level}}</td>
+                <td>{{score.score}}</td>
             </tr>
             {% endfor %}
         </tbody>

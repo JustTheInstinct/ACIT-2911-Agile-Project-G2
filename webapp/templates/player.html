@@ -1,0 +1,7 @@
+{% block main %}
+    <h1>Name: {{ player['name'] }}</h1>
+    <h2>Player ID: {{ player['id'] }}</h2>
+    <h3>Level: {{ player['level'] }}</h3>
+    <h3>Score: {{ player['score'] }}</h3>
+    <h4><a href="{{ url_for('.home') }}">Home Page</a></h4>
+{% endblock %}

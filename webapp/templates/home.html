@@ -10,11 +10,11 @@
 </head>
 <body class='container'>
     <div class='navbar'>
-        <img src='images/pvz_logo.png' alt='pvz logo' height='120'>
+        <img src='.images/pvz_logo.png' alt='pvz logo' height='120'>
         <ul>
-            <li><a href=home.html>Home</a></li>
-            <li><a href=scoreboard.html>Scoreboard</a></li>
-            <li><a href=about.html>About</a></li>
+            <li><a href="{{ url_for('.home') }}">Home</a></li>
+            <li><a href="{{ url_for('.score') }}">Scoreboard</a></li>
+            <li><a href="{{ url_for('.about') }}">About</a></li>
         </ul>
     </div>
     <div class='plantTable'>
@@ -29,22 +29,22 @@
             <tbody>
                 <tr>
                     <td>Pea Shooter</td>
-                    <td><img src='../imgs/peashooter.png'></td>
+                    <td><img src='.../imgs/peashooter.png' alt=""></td>
                     <td>It shoots peas!</td>
                 </tr>
                 <tr>
                     <td>Snow Pea</td>
-                    <td><img src='../imgs/snowpea.png'></td>
+                    <td><img src='.../imgs/snowpea.png' alt=''></td>
                     <td>Shoots peas that freeze zombies.</td>
                 </tr>
                 <tr>
                     <td>Sunflower</td>
-                    <td><img src='../imgs/sunflower.png'></td>
+                    <td><img src='.../imgs/sunflower.png' alt=''></td>
                     <td>Periodically generates gold.</td>
                 </tr>
                 <tr>
                     <td>Wallnut</td>
-                    <td><img src='../imgs/wall_nut.png'></td>
+                    <td><img src='.../imgs/wall_nut.png'></td>
                     <td>Blocks zombies.</td>
                 </tr>
             </tbody>
@@ -62,7 +62,7 @@
             <tbody>
                 <tr>
                     <td>Regular</td>
-                    <td><img src='../imgs/zombie.png'></td>
+                    <td><img src='.../imgs/zombie.png'></td>
                     <td>Just a regular zombie.</td>
                 </tr>
             </tbody>
