@@ -254,12 +254,15 @@ class GameController(PygameController):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     running = False
-                self.MainView.window.fill(0)
-                startpos -= 1
-                i=0
-                name_list=[]
-                position_list=[]
-                font = pygame.font.SysFont('Courier', 30)
+                    self.start_game()
+  
+            self.MainView.window.fill(0)
+            startpos -= 1
+            i=0
+            name_list=[]
+            position_list=[]
+            
+            font = pygame.font.SysFont('SFNT', 30)
 
             for member in team_members.split('\n'):
                 name = font.render(line, True, white)
@@ -267,10 +270,11 @@ class GameController(PygameController):
                 position = name.get_rect( center = (centerx, centery + startpos + 30 * i ))
                 position_list.append(position)
                 i += 1
-        
+    
             for j in range(i):
                 self.MainView.window.blit(name_list[j], position_list[j])     
-                pygame.display.update()
+            
+            pygame.display.update()
 
 
     def endgame(self):
