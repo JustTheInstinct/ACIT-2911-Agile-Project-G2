@@ -1,8 +1,8 @@
 # PythonPlantsVsZombies
   A simple PlantsVsZombies game. <br>
 * implement plants: sunflower, peashooter, wallnut, snowpeashooter, cherrybomb 
-* implement zombies: zombie,bucketheadzombie
-* use json file to store level data
+* implement zombies: zombie, bucketheadzombie
+* use csv file to store level data
 
 
 # Requirement

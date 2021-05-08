@@ -1,6 +1,6 @@
 import csv
 
-def extract_data(filename):
+def load_scores(filename):
     with open(filename, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         players = []
@@ -8,7 +8,7 @@ def extract_data(filename):
             players.append(line)
     return players
 
-def process_score(players):
+def process_scores(players):
     dict_list = []
     for player in players:
         score_dict = {}
@@ -21,8 +21,8 @@ def process_score(players):
 
 def get_scores():
     filename = 'webapp/pvzscore.csv'
-    data = extract_data(filename)
-    scores = process_score(data)
+    data = load_scores(filename)
+    scores = process_scores(data)
     return scores
 
 def main():

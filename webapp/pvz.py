@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from .manage_scores import get_scores
+from .scoremanager import get_scores
 
 pvz_bp = Blueprint("pvz",__name__)
 
@@ -18,7 +18,7 @@ def score():
 
 @pvz_bp.route("/scoreboard/<int:player_id>")
 def player(player_id):
-    playerscores = get_scores()
-    for playerscore in playerscores:
+    scores = get_scores()
+    for score in scores:
         if score["id"] == str(player_id):
-            return render_template("player.html", score = playerscore)
+            return render_template("player.html", score = score)
