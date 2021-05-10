@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding-left: 0rem;
+    font-size: 40px;
+    font-family: 'Pangolin', cursive;
+    color: #faf4ed;
+    text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+body {
+    background-image: url('../../imgs/day.png');
+    background-repeat: repeat;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    background-color: #8FBC8F;
+    height: 125px;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.navbar ul {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    display:inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 2rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+p {
+    margin-top: 0;
+}
+
+#person1 {
+    resize: inherit;
+}
+
+@media only screen and (min-width: 600px) {
+    .grid-container {
+        display: grid;
+        grid-template-rows: 127px 98% 2%;
+        height: 100vw;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        display: grid;
+        grid-template-rows: 15% 85%;
+        grid-template-columns: 20% 1fr 1fr 20%;
+        height: 100vw;
+        width: 100vw;
+    }
+
+
+    .person {
+        background-color: #8FBC8F;
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+        padding-left: 10%;
+        border-top: 3px solid black;
+        border-left: 3px solid black;
+        border-bottom: 3px solid black;
+        height: 90%;
+        resize: inherit;
+    }
+
+    .information {
+        background-color: #8FBC8F;
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+        border-top: 3px solid black;
+        border-right: 3px solid black;
+        border-bottom: 3px solid black;
+        height: 90%;
+    }
+
+    .general-info {
+        background-color: #8FBC8F;
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        border: 3px solid black;
+    }
+
+    .company {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+
+    .person-info {
+        padding-top: 65px;
+        padding-bottom: 65px;
+        padding-right: 20px;
+    }
+
+    footer {
+        position: fixed;
+        padding: 10px 10px 0px 10px;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
