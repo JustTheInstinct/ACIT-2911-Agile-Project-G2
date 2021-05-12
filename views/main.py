@@ -88,3 +88,5 @@ class MainView:
         font = pygame.font.SysFont('SFNT', size)
         text = font.render(content, True, color)
         return text
+
+    

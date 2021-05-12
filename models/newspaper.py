@@ -18,6 +18,7 @@ class Newspaper(Zombie):
     def losepaper(self):
         if self.hp == 400:
             self.image = pygame.image.load('./imgs/losepaper.png')
+            self.speed = 2
 
 
     def move_zombie(self):
@@ -28,11 +29,10 @@ class Newspaper(Zombie):
 
     def hit_plant(self):
         for plant in self.MainGame.plants_list:
-            if pygame.sprite.collide_rect(self,plant) and plant.live:
+            if pygame.sprite.collide_rect(self,plant):
                 self.stop = True
                 self.eat_plant(plant)
-            else:
-                self.stop = False
+
 
     def eat_plant(self,plant):
         plant.hp -= self.damage

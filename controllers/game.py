@@ -1,11 +1,10 @@
 from controllers.base import PygameController
 import pygame
 import random
-from models import Map, Sunflower, PeaShooter, Norzombie, GameState, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, newspaper
+from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper
 from views import MainView
-from datetime import datetime
-import threading
-import requests
+import webbrowser
+
 
 class GameController(PygameController):
     def __init__(self, username):
@@ -26,7 +25,7 @@ class GameController(PygameController):
         self.produce_zombie = 100
         self.MainView = MainView(self)
         self.GAMEOVER  = False
-        self.sendGameStat()
+
 
     def init_plant_points(self):
         for y in range(1, 7):
@@ -57,9 +56,9 @@ class GameController(PygameController):
         for i in range(1, 7):
             normaldis = random.randint(1,3) * 200
             normalzombie = Norzombie(800 + normaldis, i * 80, self, self.MainView)
-            bucketdis = random.randint(12,20) * 50
+            bucketdis = random.randint(4,6) * 200
             buckethead = Buckethead(800 + bucketdis, i * 80, self, self.MainView)
-            newsdis = random.randint(2,5) * 100
+            newsdis = random.randint(3,6) * 100
             newspaper = Newspaper(800 + newsdis, i * 80, self, self.MainView)
             news = time_count // 5
             buck = time_count // 10
@@ -197,13 +196,13 @@ class GameController(PygameController):
                         self.plants_list.append(lychee)
                         gamemap.can_grow = False
                         self.money -= 150
-
-    def start_game(self):
-        self.MainView.init_window()
+    
+    
+    def load_game(self):
         self.init_plant_points()
         self.init_map()
         self.init_zombies()
-        while not self.GAMEOVER: # I try to use while loop refresh game, to process objects movement and action
+        while not self.GAMEOVER:
             self.load_map()
             self.load_plants()
             self.load_bullets()
@@ -217,22 +216,82 @@ class GameController(PygameController):
             self.MainView.display()
             self.MainView.display_update()
 
+    def start_game(self):
+        self.MainView.init_window()
+        startimg =  pygame.image.load('./imgs/start.jpg')
+        start_game = False
+        while (start_game==False):
+            self.MainView.window.blit(startimg, (0,0))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                x, y = pygame.mouse.get_pos()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if 89 < x < 287 and 267 < y < 362:
+                        self.GAMEOVER = False # start game
+                        self.load_game()
+                    elif 306 < x < 447 and 314 < y < 401: # scoreboard
+                        webbrowser.open_new("http://127.0.0.1:5000/scoreboard")
+                    elif 648 < x < 757 and 355 < y < 400: # about
+                        self.aboutus()
+                    elif 117 < x < 287 and 372 < y < 443: # Homepage
+                        webbrowser.open_new("http://127.0.0.1:5000")
+                elif event.type == pygame.QUIT:
+                    pygame.quit()
+
+
+    def aboutus(self):
+        x = self.MainView.window.get_rect().centerx 
+        y = self.MainView.window.get_rect().centery
+        startpos  = y + 50
+        running =True
+        while running:
+            backimg =  pygame.image.load('./imgs/background.png')
+            self.MainView.window.blit(backimg, (0,0))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    self.start_game()
+
+            startpos -= 2 # I thinks this speed is ok, what do you guys think
+            i=0
+            name_list=[]
+            position_list=[]
+            
+            with open('./About_us.txt') as f:
+                lines = f.read().splitlines() 
+            for content in lines:
+                pygame.font.init()
+                font = pygame.font.SysFont("comicsansms", 60)
+                name = font.render(content, True, (250, 244, 237))
+                name_list.append(name)
+                position = name.get_rect(center = (x, y + startpos + 60 * i ))
+                position_list.append(position)
+                i += 1
+    
+            for j in range(i):
+                self.MainView.window.blit(name_list[j], position_list[j])     
+            
+            pygame.display.update()
+
+
     def endgame(self):
-        self.MainView.window.blit(self.MainView.draw_text('GAMEOVER', 100, (255, 0, 0)), (200, 200))
-        pygame.display.flip()
-        pygame.time.wait(1000)
         self.GAMEOVER = True
-        self.sendGameStat()
+        endimg = pygame.image.load('./imgs/gameover.jpg')
+        self.MainView.window.blit(endimg, (0,0))
+        pygame.display.flip()
+        pygame.time.wait(2000)
 
 
-    def sendGameStat(self):
-        cur_game_state = GameState(self.userName, self.level, self.score, self.remnant_score, self.money,self.GAMEOVER, datetime.now())
-        url = "http://localhost:5000/update_game_state"
-        requests.post(
-            url,
-            data=cur_game_state.to_json(),
-            headers={'Content-Type': 'application/json'}
-        )
-        if not self.GAMEOVER:
-            timer = threading.Timer(1, self.sendGameStat)
-            timer.start()
+
+
+    # def sendGameStat(self):
+    #     cur_game_state = GameState(self.userName, self.level, self.score, self.remnant_score, self.money,self.GAMEOVER, datetime.now())
+    #     url = "http://localhost:5000/update_game_state"
+    #     requests.post(
+    #         url,
+    #         data=cur_game_state.to_json(),
+    #         headers={'Content-Type': 'application/json'}
+    #     )
+    #     if not self.GAMEOVER:
+    #         timer = threading.Timer(1, self.sendGameStat)
+    #         timer.start()
