@@ -1,11 +1,11 @@
 * {
     margin: 0;
     padding-left: 0rem;
-    font-size: 40px;
+    font-size: 25px;
     font-family: 'Patrick Hand', cursive;
     color: #faf4ed;
     text-shadow:
-     3px 3px 0 #000,
+     1px 2px 0 #000,
     -1px -1px 0 #000,  
      1px -1px 0 #000,
     -1px 1px 0 #000,
@@ -19,6 +19,7 @@ body {
 
 a {
     text-decoration: none;
+    font-size: 40px;
 }
 
 a:hover {
@@ -41,7 +42,7 @@ a:hover {
     padding: 0px;
     margin: 0px;
     text-align: center;
-    display:inline-block;
+    display: inline-block;
     vertical-align: top;
     font-weight: bold;
     padding-top: 1rem;
@@ -51,6 +52,12 @@ a:hover {
 .navbar ul li {
     display: inline;
     margin-right: 2rem;
+    text-shadow:
+    3px 3px 0 #000,
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .zombieTable {
@@ -82,11 +89,11 @@ td {
     text-align: center;
     font-size: 25px;
     text-shadow:
-     1px 2px 0 #000,
-    -1px -1px 0 #000,  
-     1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
+    1px 2px 0 #000,
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .plantTable {
@@ -108,7 +115,8 @@ td {
 }
 
 .description p {
-    padding-top: 10px;
+    padding-top: 5px;
+    margin-bottom: 5px;
     font-size: 25px;
     text-shadow:
      1px 2px 0 #000,
@@ -116,4 +124,42 @@ td {
      1px -1px 0 #000,
     -1px 1px 0 #000,
      1px 1px 0 #000;
+}
+
+.scoreboardHeader {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 90%;
+    width: 90%;
+    background-color: #8FBC8F;
+    border: 2px solid black;
+    text-align: center;
+    font-size: 40px;
+}
+
+.scoreboard {
+    margin-left: 2rem;
+    height: 90%;
+    width: 90%;
+    background-color: #8FBC8F;
+}
+
+.scores {
+    font-size: 25px;
+}
+
+.player {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    width: 20%;
+    background-color: #8FBC8F;
+    border: 2px solid black;
+    text-align: left;
+    padding-left: 5px;
+}
+
+h1 {
+    text-align: left;
+    padding: 0px;
+    font-size: 30px;
 }
