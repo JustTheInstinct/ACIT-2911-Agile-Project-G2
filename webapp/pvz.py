@@ -22,3 +22,7 @@ def player(player_id):
     for score in scores:
         if score["id"] == str(player_id):
             return render_template("player.html", score = score)
+
+@pvz_bp.route("/units")
+def units():
+    return render_template("units.html")

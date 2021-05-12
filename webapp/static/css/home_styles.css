@@ -97,7 +97,7 @@ td {
     background-color: #8FBC8F;
 }
 
-.howTo {
+.description {
     margin-top: 1rem;
     margin-left: 2rem;
     height: 90%;
@@ -105,15 +105,9 @@ td {
     background-color: #8FBC8F;
     border: 2px solid black;
     padding-left: 0.5rem;
-    font-weight: bold;
 }
 
-.howTo ol {
-    padding-left: 1rem;
-    font-weight: normal;
-}
-
-.howTo ol li {
+.description p {
     padding-top: 10px;
     font-size: 25px;
     text-shadow:
