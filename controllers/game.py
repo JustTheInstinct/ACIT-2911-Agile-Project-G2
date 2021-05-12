@@ -144,6 +144,7 @@ class GameController(PygameController):
 
     def events_handler(self):
         events = pygame.event.get()
+        e_one = None
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
@@ -151,12 +152,12 @@ class GameController(PygameController):
             elif e.type == pygame.KEYDOWN:
 
                 #trasnfer cordinate to position mark here, 
-                x, y = pygame.mouse.get_pos()# // 80
+                x, y = pygame.mouse.get_pos()
                 x = x // 80
                 y = y // 80
                 #locate which piece of map that plyer mouse clicks 
                 gamemap = self.map_list[y - 1][x]
-               
+            
                 if e.key == pygame.K_1: #create sunflower
                     condition = gamemap.can_grow and self.money >= 50
                     if condition:
