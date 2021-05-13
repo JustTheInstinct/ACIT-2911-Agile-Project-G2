@@ -1,5 +1,6 @@
 from .plant import Plant
 import pygame
+from pygame import mixer
 from .bullet import PeaBullet
 
 class PeaShooter(Plant):
@@ -14,6 +15,9 @@ class PeaShooter(Plant):
         self.hp = 200
         self.shot_count = 0
 
+        self.shoot_sound = mixer.Sound("./sounds/shoop1.wav")
+        pygame.mixer.Sound.set_volume(self.shoot_sound, 0.3)
+
 
     def shot(self):
 
@@ -25,6 +29,7 @@ class PeaShooter(Plant):
         if self.live and should_fire:
             self.shot_count += 1
             if self.shot_count == 25:
+                self.shoot_sound.play()
                 peabullet = PeaBullet(self, self.MainGame, self.MainView)
                 self.MainGame.peabullet_list.append(peabullet)
                 self.shot_count = 0
