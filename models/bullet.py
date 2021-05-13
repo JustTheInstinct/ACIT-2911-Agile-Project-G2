@@ -1,7 +1,9 @@
 import pygame
+from pygame import mixer
 
 class PeaBullet(pygame.sprite.Sprite):
     def __init__(self,peashooter, MainGame, MainView):
+        mixer.init()
         self.live = True
         self.image = pygame.image.load('./imgs/peabullet.png')
         self.damage = 50
@@ -11,6 +13,10 @@ class PeaBullet(pygame.sprite.Sprite):
         self.rect.y = peashooter.rect.y + 15
         self.MainGame = MainGame
         self.MainView = MainView
+        self.hit_sound = mixer.Sound("./sounds/splat3.wav")
+        pygame.mixer.Sound.set_volume(self.hit_sound, 0.3)
+        self.kill_sound = mixer.Sound("./sounds/splat.wav")
+        pygame.mixer.Sound.set_volume(self.kill_sound, 0.3)
 
     def move_bullet(self):
         if self.rect.x < 800:
@@ -22,9 +28,11 @@ class PeaBullet(pygame.sprite.Sprite):
     def hit_zombie(self):
         for zombie in self.MainGame.zombie_list:
             if pygame.sprite.collide_rect(self,zombie):
+                self.hit_sound.play()
                 self.live = False
                 zombie.hp -= self.damage
                 if zombie.hp <= 0:
+                    self.kill_sound.play()
                     zombie.live = False
                     self.nextLevel()
 

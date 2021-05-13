@@ -1,5 +1,6 @@
 from controllers.base import PygameController
 import pygame
+from pygame import mixer
 import random
 from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper
 from views import MainView
@@ -8,6 +9,7 @@ import webbrowser
 
 class GameController(PygameController):
     def __init__(self, username):
+        mixer.init()
         self.userName = username
         self.level = 1
         self.score = 0
@@ -25,6 +27,8 @@ class GameController(PygameController):
         self.produce_zombie = 100
         self.MainView = MainView(self)
         self.GAMEOVER  = False
+        self.plant_sound = mixer.Sound("./sounds/plant.wav")
+        pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
 
 
     def init_plant_points(self):
@@ -143,22 +147,23 @@ class GameController(PygameController):
 
     def events_handler(self):
         events = pygame.event.get()
+        e_one = None
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
 
             elif e.type == pygame.KEYDOWN:
-
                 #trasnfer cordinate to position mark here, 
-                x, y = pygame.mouse.get_pos()# // 80
+                x, y = pygame.mouse.get_pos()
                 x = x // 80
                 y = y // 80
                 #locate which piece of map that plyer mouse clicks 
                 gamemap = self.map_list[y - 1][x]
-               
+            
                 if e.key == pygame.K_1: #create sunflower
                     condition = gamemap.can_grow and self.money >= 50
                     if condition:
+                        self.plant_sound.play()
                         sunflower = Sunflower(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(sunflower)
                         gamemap.can_grow = False
@@ -167,6 +172,7 @@ class GameController(PygameController):
                 if e.key == pygame.K_2: #create peashooter
                     condition = gamemap.can_grow and self.money >= 50
                     if condition:
+                        self.plant_sound.play()
                         peashooter = PeaShooter(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(peashooter)
                         gamemap.can_grow = False
@@ -175,6 +181,7 @@ class GameController(PygameController):
                 if e.key == pygame.K_3: #create snowpea
                     condition = gamemap.can_grow and self.money >= 60
                     if condition:
+                        self.plant_sound.play()
                         snowpea = SnowPea(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(snowpea)
                         gamemap.can_grow = False
@@ -183,6 +190,7 @@ class GameController(PygameController):
                 if e.key == pygame.K_4: #create walnut
                     condition = gamemap.can_grow and self.money >= 50
                     if condition:
+                        self.plant_sound.play()
                         wallnut = Wallnut(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(wallnut)
                         gamemap.can_grow = False
@@ -191,6 +199,7 @@ class GameController(PygameController):
                 if e.key == pygame.K_5: #create Lychee Bomb
                     condition = gamemap.can_grow and self.money >= 150
                     if condition:
+                        self.plant_sound.play()
                         lychee = LycheeBomb(gamemap.position[0], gamemap.position[1], self, self.MainView)
                         self.plants_list.append(lychee)
                         gamemap.can_grow = False
@@ -201,6 +210,9 @@ class GameController(PygameController):
         self.init_plant_points()
         self.init_map()
         self.init_zombies()
+        mixer.init()
+        mixer.music.load("./sounds/04 Grasswalk.wav")
+        mixer.music.play(-1)
         while not self.GAMEOVER:
             self.load_map()
             self.load_plants()
@@ -217,6 +229,9 @@ class GameController(PygameController):
 
     def start_game(self):
         self.MainView.init_window()
+        mixer.init()
+        mixer.music.load("./sounds/lobby.wav")
+        mixer.music.play(-1)
         startimg =  pygame.image.load('./imgs/start.jpg')
         start_game = False
         while (start_game==False):

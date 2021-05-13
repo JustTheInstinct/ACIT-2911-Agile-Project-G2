@@ -1,7 +1,9 @@
 import pygame
+from pygame import mixer
 
 class Explode(pygame.sprite.Sprite):
     def __init__(self,lychee_bomb, MainGame, MainView):
+        mixer.init()
         self.live = True
         self.image = pygame.image.load('./imgs/explosion.png')
         self.damage = 2500
@@ -10,6 +12,10 @@ class Explode(pygame.sprite.Sprite):
         self.rect.y = lychee_bomb.rect.y - 80
         self.MainGame = MainGame
         self.MainView = MainView
+
+        self.explode_sound = mixer.Sound("./sounds/Explosion+3.wav")
+        pygame.mixer.Sound.set_volume(self.explode_sound, 0.3)
+        self.explode_sound.play()
 
     def hit_zombie(self):
         for zombie in self.MainGame.zombie_list:
