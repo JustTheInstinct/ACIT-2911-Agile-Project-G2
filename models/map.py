@@ -10,6 +10,6 @@ class Map():
         self.MainView = MainView
 
     def load_map(self):
-        # grass_img =  pygame.image.load('./imgs/grass.jpg').convert()
+        # grass_img =  pygame.image.load('./imgs/grass.jpg')
         # self.MainView.window.blit(grass_img, (0,80))
         self.MainView.window.blit(self.image,self.position)

@@ -335,4 +335,3 @@ class GameController(PygameController):
                         waiting = False
                         self.GAMEOVER  = False
                         self.main_menu() # main menu
-    
