@@ -32,14 +32,16 @@ class GameController(PygameController):
 
 
     def init_plant_points(self):
+        """Create cordiantion"""
         for y in range(1, 7):
             points = []
             for x in range(10):
-                point = (x, y) # I created a nest loop to mark map position
-                points.append(point) # store positions in a list for later use
+                point = (x, y)
+                points.append(point)
             self.map_points_list.append(points)
 
     def init_map(self):
+        """Create map list with nest loop"""
         for points in self.map_points_list:
             column_map_list = []
             for point in points:
