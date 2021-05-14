@@ -149,7 +149,6 @@ class GameController(PygameController):
 
     def events_handler(self):
         events = pygame.event.get()
-        e_one = None
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
