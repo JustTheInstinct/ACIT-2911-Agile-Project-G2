@@ -218,8 +218,8 @@ class GameController(PygameController):
         mixer.init()
         mixer.music.load("./sounds/04 Grasswalk.wav")
         mixer.music.play(-1)
+        pygame.display.flip()
         while not self.GAMEOVER:
-            self.load_map()
             self.load_plants()
             self.load_bullets()
             self.load_explosions()
@@ -229,6 +229,8 @@ class GameController(PygameController):
             if self.count_zombie == self.produce_zombie:
                 self.init_zombies()
                 self.count_zombie = 0
+            grass_img =  pygame.image.load('./imgs/grass.jpg')
+            self.MainView.window.blit(grass_img, (0,0))
             self.MainView.display()
             self.MainView.display_update()
 
