@@ -250,9 +250,25 @@ class GameController(PygameController):
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
                         webbrowser.open_new("http://127.0.0.1:5000")
+                    elif 574 < x < 632 and 444 < y < 540:
+                        self.help()
+                    elif 489 < x < 559 and 444 < y < 540:
+                        exit()
                 elif event.type == pygame.QUIT:
                     pygame.quit()
 
+    def help(self):
+        runing = True
+        while runing:
+            help_img =  pygame.image.load('./imgs/help.png')
+            self.MainView.window.blit(help_img, (0,0))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = pygame.mouse.get_pos()
+                    if 531 < x < 687 and 491 < y < 521:
+                        runing = False
+                        self.start_game()
 
     def aboutus(self):
         x = self.MainView.window.get_rect().centerx 
@@ -295,18 +311,3 @@ class GameController(PygameController):
         self.MainView.window.blit(endimg, (0,0))
         pygame.display.flip()
         pygame.time.wait(2000)
-
-
-
-
-    # def sendGameStat(self):
-    #     cur_game_state = GameState(self.userName, self.level, self.score, self.remnant_score, self.money,self.GAMEOVER, datetime.now())
-    #     url = "http://localhost:5000/update_game_state"
-    #     requests.post(
-    #         url,
-    #         data=cur_game_state.to_json(),
-    #         headers={'Content-Type': 'application/json'}
-    #     )
-    #     if not self.GAMEOVER:
-    #         timer = threading.Timer(1, self.sendGameStat)
-    #         timer.start()
