@@ -10,13 +10,19 @@ import webbrowser
 class GameController(PygameController):
     def __init__(self, username):
         mixer.init()
-        self.userName = username
+        self.username = username
+        self.setup()
+        self.MainView = MainView(self)
+        self.plant_sound = mixer.Sound("./sounds/plant.wav")
+        pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
+
+    def setup(self):
+        self.map_points_list = []
+        self.map_list = []
         self.level = 1
         self.score = 0
         self.remnant_score = 100
         self.money = 200
-        self.map_points_list = []
-        self.map_list = []
         self.plants_list = []
         self.peabullet_list = []
         self.icebullet_list = []
@@ -25,10 +31,7 @@ class GameController(PygameController):
         self.zombie_list = []
         self.count_zombie = 0
         self.produce_zombie = 100
-        self.MainView = MainView(self)
         self.GAMEOVER  = False
-        self.plant_sound = mixer.Sound("./sounds/plant.wav")
-        pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
 
 
     def init_plant_points(self):
@@ -208,6 +211,7 @@ class GameController(PygameController):
     
     
     def load_game(self):
+        self.setup()
         self.init_plant_points()
         self.init_map()
         self.init_zombies()
@@ -228,21 +232,21 @@ class GameController(PygameController):
             self.MainView.display()
             self.MainView.display_update()
 
-    def start_game(self):
+    def main_menu(self):
         self.MainView.init_window()
         mixer.init()
         mixer.music.load("./sounds/lobby.wav")
         mixer.music.play(-1)
         startimg =  pygame.image.load('./imgs/start.jpg')
-        start_game = False
-        while (start_game==False):
-            self.MainView.window.blit(startimg, (0,0))
-            pygame.display.flip()
+        self.MainView.window.blit(startimg, (0,0))
+        pygame.display.flip()
+        waiting = True
+        while waiting:
             for event in pygame.event.get():
                 x, y = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if 89 < x < 287 and 267 < y < 362:
-                        self.GAMEOVER = False # start game
+                        self.GAMEOVER = False
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
                         webbrowser.open_new("http://127.0.0.1:5000/scoreboard")
@@ -268,7 +272,7 @@ class GameController(PygameController):
                     x, y = pygame.mouse.get_pos()
                     if 531 < x < 687 and 491 < y < 521:
                         runing = False
-                        self.start_game()
+                        self.main_menu()
 
     def aboutus(self):
         x = self.MainView.window.get_rect().centerx 
@@ -281,7 +285,7 @@ class GameController(PygameController):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.start_game()
+                    self.main_menu()
 
             startpos -= 2 # I thinks this speed is ok, what do you guys think
             i=0
@@ -306,8 +310,19 @@ class GameController(PygameController):
 
 
     def endgame(self):
-        self.GAMEOVER = True
-        endimg = pygame.image.load('./imgs/gameover.jpg')
-        self.MainView.window.blit(endimg, (0,0))
-        pygame.display.flip()
-        pygame.time.wait(2000)
+        waiting = True
+        while waiting:
+            end_img = pygame.image.load('./imgs/gameover.jpg')
+            self.MainView.window.blit(end_img, (0,0))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                x, y = pygame.mouse.get_pos()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if 159 < x < 324 and 506 < y < 537:
+                        waiting = False # restart
+                        self.GAMEOVER  = False
+                        self.load_game()
+                    elif 447 < x < 618 and 506 < y < 537:
+                        waiting = False
+                        self.GAMEOVER  = False
+                        self.main_menu() # main menu

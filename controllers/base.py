@@ -6,7 +6,7 @@ class PygameController:
         running = True
         clock = pygame.time.Clock()
         while running:
-            clock.tick(30)
+            clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.locals.QUIT:
                     return False

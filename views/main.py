@@ -77,10 +77,8 @@ class MainView:
 
 
     def display_help_text(self):
-        text1 = self.draw_text('INSTRUCTION: Move your mouse to empty field, use keyboard number keys to create plants', 20, (255, 0, 0))
-        text2 = self.draw_text('Num 1 - Sunflowers | Num 2 - PeaShooter | Num 3 - Snowpea | Num 4 - Walnut | Num 5 - Lycheebomb', 20, (255, 0, 0))
+        text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 60, (255, 0, 0))
         self.window.blit(text1, (5, 5))
-        self.window.blit(text2, (5, 20))
 
 
     def draw_text(self, content, size, color):
