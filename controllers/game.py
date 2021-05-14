@@ -1,16 +1,16 @@
 from controllers.base import PygameController
-import pygame
-from pygame import mixer
-import random
 from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper
 from views import MainView
-import webbrowser
+import webbrowser, pygame, uuid, random, csv
+from pygame import mixer
 
 
 class GameController(PygameController):
     def __init__(self, username):
         mixer.init()
         self.username = username
+        self.id = uuid.uuid1().time_low
+        print(self.id)
         self.setup()
         self.MainView = MainView(self)
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
@@ -308,8 +308,15 @@ class GameController(PygameController):
             
             pygame.display.update()
 
+    def save_score(self):
+        with open('./webapp/pvzscore.csv', mode='a+') as player_file:
+            score = csv.writer(player_file, delimiter=',')
+            score.writerow([f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}'])
+            player_file.close()
+
 
     def endgame(self):
+        self.save_score()
         waiting = True
         while waiting:
             end_img = pygame.image.load('./imgs/gameover.jpg')
@@ -326,3 +333,4 @@ class GameController(PygameController):
                         waiting = False
                         self.GAMEOVER  = False
                         self.main_menu() # main menu
+    
