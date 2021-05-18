@@ -16,8 +16,8 @@ class PeaShooter(Plant):
         self.shot_count = 0
         self.should_fire = False
 
-        self.shoot_sound = mixer.Sound("./sounds/shoop1.wav")
-        pygame.mixer.Sound.set_volume(self.shoot_sound, 0.3)
+        # self.shoot_sound = mixer.Sound("./sounds/shoop1.wav")
+        # pygame.mixer.Sound.set_volume(self.shoot_sound, 0.3)
 
 
     def shot(self):
