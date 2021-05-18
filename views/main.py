@@ -82,9 +82,48 @@ class MainView:
         text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 60, (255, 0, 0))
         self.window.blit(text1, (1000, 5))
 
-
+    def display_mode(self):
+        diff_img =  pygame.image.load('./imgs/difficulty.jpg')
+        self.window.blit(diff_img, (0,0))
+        easy = self.draw_text(f'Easy: Less zombie, 400 start gold', 30, (0, 255, 0))
+        normal = self.draw_text(f'Normal: More zombie, 200 start gold', 30, (255, 204, 0))
+        hard = self.draw_text(f'Easy: Massive zombies and boss Juggernut , 100 start gold', 30, (255, 0, 0))
+        self.window.blit(easy, (150, 50))
+        self.window.blit(normal, (150, 100))
+        self.window.blit(hard, (150, 150))
+        if self.MainGame.difficulty == 0:
+            mode = "Easy"
+        elif self.MainGame.difficulty == 2:
+            mode = "Hard"
+        else:
+            mode = "Normal"
+        activated = self.draw_text(f'{mode} mode is activated', 60, (255, 0, 0))
+        self.window.blit(activated, (150, 400))
+    
     def draw_text(self, content, size, color):
         pygame.font.init()
         font = pygame.font.SysFont('SFNT', size)
         text = font.render(content, True, color)
         return text
+    
+    def display_menu(self):
+        self.window = pygame.display.set_mode([800, 560])
+        self.init_window()
+        startimg =  pygame.image.load('./imgs/start.jpg')
+        self.window.blit(startimg, (0,0))
+        pygame.display.flip()
+    
+    def display_help(self):
+        help_img =  pygame.image.load('./imgs/help.png')
+        self.window.blit(help_img, (0,0))
+        pygame.display.flip()
+
+    def display_background(self):
+        backimg = pygame.image.load('./imgs/background.png')
+        self.window.blit(backimg, (0,0))
+
+    def display_endscreen(self):
+        self.window = pygame.display.set_mode([800, 560])
+        end_img = pygame.image.load('./imgs/gameover.jpg')
+        self.window.blit(end_img, (0,0))
+        pygame.display.flip()

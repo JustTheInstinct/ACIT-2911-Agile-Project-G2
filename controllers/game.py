@@ -231,14 +231,10 @@ class GameController(PygameController):
             self.MainView.display_update()
 
     def main_menu(self):
-        self.window = pygame.display.set_mode([800, 560])
-        self.MainView.init_window()
+        self.MainView.display_menu()
         mixer.init()
         mixer.music.load("./sounds/lobby.wav")
         mixer.music.play(-1)
-        startimg =  pygame.image.load('./imgs/start.jpg')
-        self.MainView.window.blit(startimg, (0,0))
-        pygame.display.flip()
         waiting = True
         while waiting:
             for event in pygame.event.get():
@@ -261,36 +257,33 @@ class GameController(PygameController):
                     pygame.quit()
     
     def hard_mode(self):
-        runing = True
-        while runing:
-            diff_img =  pygame.image.load('./imgs/difficulty.jpg')
-            self.MainView.window.blit(diff_img, (0,0))
+        waiting = True
+        while waiting:
+            self.MainView.display_mode()
             pygame.display.flip()
             for event in pygame.event.get():
-                 if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     if 108 < x < 196 and 324 < y < 369:
                         self.difficulty = 0
-                        runing = False
-                        self.main_menu()
-                    if 320 < x < 478 and 330 < y < 360:
+                        self.MainView.display_mode()
+
+                    elif 320 < x < 478 and 330 < y < 360:
                         self.difficulty = 1
-                        runing = False
-                        self.main_menu()
-                    if 596 < x < 705 and 330 < y < 360:
+                        self.MainView.display_mode()
+
+                    elif 596 < x < 705 and 330 < y < 360:
                         self.difficulty = 2
-                        runing = False
-                        self.main_menu()
-                    elif event.type == pygame.QUIT:
-                        runing = False
+                        self.MainView.display_mode()
+
+                elif event.type == pygame.QUIT:
+                        waiting = False
                         self.main_menu()
 
     def help(self):
         runing = True
         while runing:
-            help_img =  pygame.image.load('./imgs/help.png')
-            self.MainView.window.blit(help_img, (0,0))
-            pygame.display.flip()
+            self.MainView.display_help()
             for event in pygame.event.get():
                  if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
@@ -304,14 +297,13 @@ class GameController(PygameController):
         startpos  = y + 50
         running =True
         while running:
-            backimg =  pygame.image.load('./imgs/background.png')
-            self.MainView.window.blit(backimg, (0,0))
+            self.MainView.display_background()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                     self.main_menu()
 
-            startpos -= 2 # I thinks this speed is ok, what do you guys think
+            startpos -= 2
             i=0
             name_list=[]
             position_list=[]
@@ -326,10 +318,9 @@ class GameController(PygameController):
                 position = name.get_rect(center = (x, y + startpos + 60 * i ))
                 position_list.append(position)
                 i += 1
-    
+
             for j in range(i):
                 self.MainView.window.blit(name_list[j], position_list[j])     
-            
             pygame.display.update()
 
     def save_score(self):
@@ -342,11 +333,8 @@ class GameController(PygameController):
     def endgame(self):
         self.save_score()
         waiting = True
+        self.MainView.display_endscreen()
         while waiting:
-            self.window = pygame.display.set_mode([800, 560])
-            end_img = pygame.image.load('./imgs/gameover.jpg')
-            self.MainView.window.blit(end_img, (0,0))
-            pygame.display.flip()
             for event in pygame.event.get():
                 x, y = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
