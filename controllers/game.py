@@ -17,6 +17,7 @@ class GameController(PygameController):
         pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
 
     def setup(self):
+        """default game settings"""
         self.cord_list = []
         self.grid_list = []
         self.level = 1
@@ -39,7 +40,6 @@ class GameController(PygameController):
             self.money = 100
             self.produce_zombie = 100
 
-
     def init_plant_points(self):
         """Create cordiantion"""
         for y in range(1, 7):
@@ -60,10 +60,7 @@ class GameController(PygameController):
 
 
     def init_zombies(self):
-        """Spawn zombies in random lane and at least 200 away from map, it gives players 
-        some time to plant sunflower first, since I only draw a 800*560 pygame interface
-        player may not see zombies when it spawns. Once it walks in to my interface,
-        player can see it """
+        """Spawn zombies"""
         time_count = 0
         for i in range(1, 7):
             normaldis = random.randint(1,3) * 200
@@ -148,6 +145,7 @@ class GameController(PygameController):
                 self.explosion_list.remove(explosion)
 
     def events_handler(self):
+        """check user actions in game interface"""
         events = pygame.event.get()
         for e in events:
             if e.type == pygame.QUIT:
@@ -208,6 +206,7 @@ class GameController(PygameController):
                             self.money -= 150
     
     def load_game(self):
+        """load game interface, game start"""
         self.window = pygame.display.set_mode([1400, 560])
         self.setup()
         self.init_plant_points()
@@ -231,6 +230,7 @@ class GameController(PygameController):
             self.MainView.display_update()
 
     def main_menu(self):
+        """load game menu and track user actions on main menu"""
         self.MainView.display_menu()
         mixer.init()
         mixer.music.load("./sounds/lobby.wav")
@@ -257,6 +257,7 @@ class GameController(PygameController):
                     pygame.quit()
     
     def hard_mode(self):
+        """alow players change difficulty level of the game"""
         waiting = True
         while waiting:
             self.MainView.display_mode()
@@ -267,20 +268,18 @@ class GameController(PygameController):
                     if 108 < x < 196 and 324 < y < 369:
                         self.difficulty = 0
                         self.MainView.display_mode()
-
                     elif 320 < x < 478 and 330 < y < 360:
                         self.difficulty = 1
                         self.MainView.display_mode()
-
                     elif 596 < x < 705 and 330 < y < 360:
                         self.difficulty = 2
                         self.MainView.display_mode()
-
                 elif event.type == pygame.QUIT:
                         waiting = False
                         self.main_menu()
 
     def help(self):
+        """show game instruction"""
         runing = True
         while runing:
             self.MainView.display_help()
@@ -292,6 +291,7 @@ class GameController(PygameController):
                         self.main_menu()
 
     def aboutus(self):
+        """show project team members in rolling credits"""
         x = self.MainView.window.get_rect().centerx 
         y = self.MainView.window.get_rect().centery
         startpos  = y + 50
@@ -324,6 +324,7 @@ class GameController(PygameController):
             pygame.display.update()
 
     def save_score(self):
+        """save players score"""
         with open('./webapp/pvzscore.csv', mode='a+') as player_file:
             score = csv.writer(player_file, delimiter=',')
             score.writerow([f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}'])
@@ -331,6 +332,7 @@ class GameController(PygameController):
 
 
     def endgame(self):
+        """show game over screen and track players actions"""
         self.save_score()
         waiting = True
         self.MainView.display_endscreen()
