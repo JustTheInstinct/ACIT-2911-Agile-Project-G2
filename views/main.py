@@ -70,8 +70,12 @@ class MainView:
                 zombie.display_zombie()
 
     def display_map(self):
-        gameimg =  pygame.image.load('./imgs/day.jpeg')
-        self.window.blit(gameimg,(0,0))
+        dayimg =  pygame.image.load('./imgs/day.jpeg')
+        nightimg = pygame.image.load('./imgs/night.jpg')
+        if self.MainGame.difficulty == 2:
+            self.window.blit(nightimg,(0,0))
+        else:
+            self.window.blit(dayimg,(0,0))
 
 
     def display_help_text(self):
