@@ -5,12 +5,10 @@ class MainView:
     def __init__(self, MainGame):
         self.MainGame = MainGame
 
-
     def init_window(self):
         pygame.display.init()
         pygame.display.set_caption('Plants VS Zombies')
         self.window = pygame.display.set_mode([800, 560])
-
 
     def display(self):
         self.display_map()
@@ -22,17 +20,14 @@ class MainView:
         self.display_zombies()
         self.display_icebullets()
 
-
     def display_update(self):
         pygame.time.wait(10)
         pygame.display.update()
-
 
     def display_stat(self):
         self.window.blit(self.draw_text('Gold$:{}  , Level:{} , Score:{}'.format(self.MainGame.money,self.MainGame.level, self.MainGame.score), 26, (0, 0, 0)), (1000, 40))
         self.window.blit(self.draw_text(
             'You need {} points to reach next level'.format(self.MainGame.remnant_score), 26, (0, 0, 0)), (1000, 60))
-
 
     def display_plants(self):
         for plant in self.MainGame.plants_list:
@@ -52,7 +47,6 @@ class MainView:
         for i in self.MainGame.icebullet_list:
             if i.live:
                 i.display_icebullet()
-
 
     def display_peabullets(self):
         for b in self.MainGame.peabullet_list:
@@ -77,6 +71,11 @@ class MainView:
         else:
             self.window.blit(dayimg,(0,0))
 
+    def draw_text(self, content, size, color):
+        pygame.font.init()
+        font = pygame.font.SysFont('SFNT', size)
+        text = font.render(content, True, color)
+        return text
 
     def display_help_text(self):
         text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 60, (255, 0, 0))
@@ -99,12 +98,6 @@ class MainView:
             mode = "Normal"
         activated = self.draw_text(f'{mode} mode is activated', 60, (255, 0, 0))
         self.window.blit(activated, (150, 400))
-    
-    def draw_text(self, content, size, color):
-        pygame.font.init()
-        font = pygame.font.SysFont('SFNT', size)
-        text = font.render(content, True, color)
-        return text
     
     def display_menu(self):
         self.window = pygame.display.set_mode([800, 560])
