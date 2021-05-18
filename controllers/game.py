@@ -10,7 +10,6 @@ class GameController(PygameController):
         mixer.init()
         self.username = username
         self.id = uuid.uuid1().time_low
-        print(self.id)
         self.setup()
         self.MainView = MainView(self)
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
@@ -218,8 +217,8 @@ class GameController(PygameController):
         mixer.init()
         mixer.music.load("./sounds/04 Grasswalk.wav")
         mixer.music.play(-1)
+        pygame.display.flip()
         while not self.GAMEOVER:
-            self.load_map()
             self.load_plants()
             self.load_bullets()
             self.load_explosions()
@@ -229,6 +228,8 @@ class GameController(PygameController):
             if self.count_zombie == self.produce_zombie:
                 self.init_zombies()
                 self.count_zombie = 0
+            grass_img =  pygame.image.load('./imgs/grass.jpg')
+            self.MainView.window.blit(grass_img, (0,0))
             self.MainView.display()
             self.MainView.display_update()
 
@@ -249,11 +250,11 @@ class GameController(PygameController):
                         self.GAMEOVER = False
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
-                        webbrowser.open_new("http://127.0.0.1:5000/scoreboard")
+                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com/scoreboard")
                     elif 648 < x < 757 and 355 < y < 400: # about
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
-                        webbrowser.open_new("http://127.0.0.1:5000")
+                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com")
                     elif 574 < x < 632 and 444 < y < 540:
                         self.help()
                     elif 489 < x < 559 and 444 < y < 540:
@@ -333,4 +334,3 @@ class GameController(PygameController):
                         waiting = False
                         self.GAMEOVER  = False
                         self.main_menu() # main menu
-    
