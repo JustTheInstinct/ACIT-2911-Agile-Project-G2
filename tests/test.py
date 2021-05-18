@@ -1,10 +1,10 @@
 import pytest
-from ..models import Sunflower
-from ..models import Wallnut
-from ..models import Buckethead
-from ..models import LycheeBomb
-from ..models import LycheeSpike
-from ..models import Newspaper
+from models import Sunflower
+from models import Wallnut
+from models import Buckethead
+from models import LycheeBomb
+from models import LycheeSpike
+from models import Newspaper
 
 class maing():
     def __init__(self, money):
