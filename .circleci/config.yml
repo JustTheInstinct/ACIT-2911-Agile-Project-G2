@@ -33,7 +33,7 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-       - run:
+      - run:
            name: "install dependencies"
            command: |
             python -m venv venv
