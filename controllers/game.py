@@ -10,6 +10,7 @@ class GameController(PygameController):
         mixer.init()
         self.username = username
         self.id = uuid.uuid1().time_low
+        self.difficullty = 1
         self.setup()
         self.MainView = MainView(self)
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
@@ -31,6 +32,12 @@ class GameController(PygameController):
         self.count_zombie = 0
         self.produce_zombie = 500
         self.GAMEOVER  = False
+        if self.difficullty == 0:
+            self.money = 400
+            self.produce_zombie = 600
+        elif self.difficullty == 2:
+            self.money = 100
+            self.produce_zombie = 100
 
 
     def init_plant_points(self):
@@ -200,11 +207,14 @@ class GameController(PygameController):
                             grid.can_grow = False
                             self.money -= 150
     
-    
     def load_game(self):
         self.window = pygame.display.set_mode([1400, 560])
-        gameimg =  pygame.image.load('./imgs/Background1.jpeg')
-        self.MainView.window.blit(gameimg,(0,0))
+        dayimg =  pygame.image.load('./imgs/day.jpeg')
+        nightimg = pygame.image.load('./imgs/night.jpg')
+        if self.difficullty == 2:
+            self.MainView.window.blit(nightimg,(0,0))
+        else:
+            self.MainView.window.blit(dayimg,(0,0))
         self.setup()
         self.init_plant_points()
         self.init_grid()
@@ -248,13 +258,35 @@ class GameController(PygameController):
                     elif 648 < x < 757 and 355 < y < 400: # about
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
-                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com")
+                        self.hard_mode()
                     elif 574 < x < 632 and 444 < y < 540:
                         self.help()
                     elif 489 < x < 559 and 444 < y < 540:
                         exit()
                 elif event.type == pygame.QUIT:
                     pygame.quit()
+    
+    def hard_mode(self):
+        runing = True
+        while runing:
+            diff_img =  pygame.image.load('./imgs/difficulty.jpg')
+            self.MainView.window.blit(diff_img, (0,0))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = pygame.mouse.get_pos()
+                    if 108 < x < 196 and 324 < y < 369:
+                        self.difficullty = 0
+                        runing = False
+                        self.main_menu()
+                    if 320 < x < 478 and 330 < y < 360:
+                        self.difficullty = 1
+                        runing = False
+                        self.main_menu()
+                    if 596 < x < 705 and 330 < y < 360:
+                        self.difficullty = 2
+                        runing = False
+                        self.main_menu()
 
     def help(self):
         runing = True

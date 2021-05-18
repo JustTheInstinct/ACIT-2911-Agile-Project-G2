@@ -70,7 +70,7 @@ class MainView:
                 zombie.display_zombie()
 
     def display_map(self):
-        gameimg =  pygame.image.load('./imgs/Background1.jpeg')
+        gameimg =  pygame.image.load('./imgs/day.jpeg')
         self.window.blit(gameimg,(0,0))
 
 
