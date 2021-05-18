@@ -24,7 +24,7 @@ class Newspaper(Zombie):
     def move_zombie(self):
         if self.live and not self.stop:
             self.rect.x -= self.speed
-            if self.rect.x < -80:
+            if self.rect.x < 220:
                 self.MainGame.endgame()
 
     def hit_plant(self):
@@ -39,7 +39,7 @@ class Newspaper(Zombie):
         if plant.hp <= 0:
             a = plant.rect.y // 80 - 1
             b = plant.rect.x // 80
-            map = self.MainGame.map_list[a][b]
+            map = self.MainGame.grid_list[a][b]
             map.can_grow = True
             plant.live = False
             self.stop = False

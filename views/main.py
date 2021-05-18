@@ -13,9 +13,9 @@ class MainView:
 
 
     def display(self):
+        self.display_map()
         self.display_stat()
         self.display_help_text()
-        self.display_map()
         self.display_plants()
         self.display_peabullets()
         self.display_lycheespikes()
@@ -29,10 +29,9 @@ class MainView:
 
 
     def display_stat(self):
-        self.window.fill((255, 255, 255))
-        self.window.blit(self.draw_text('GOLD$: {}'.format(self.MainGame.money), 26, (255, 0, 0)), (550, 40))
+        self.window.blit(self.draw_text('Gold$:{}  , Level:{} , Score:{}'.format(self.MainGame.money,self.MainGame.level, self.MainGame.score), 26, (0, 0, 0)), (1000, 40))
         self.window.blit(self.draw_text(
-            'Level:{}, Score: {}, You still need {} points to reach next level   '.format(self.MainGame.level, self.MainGame.score, self.MainGame.remnant_score), 26, (255, 0, 0)), (5, 40))
+            'You need {} points to reach next level'.format(self.MainGame.remnant_score), 26, (0, 0, 0)), (1000, 60))
 
 
     def display_plants(self):
@@ -71,14 +70,13 @@ class MainView:
                 zombie.display_zombie()
 
     def display_map(self):
-        for temp_map_list in self.MainGame.map_list:
-            for map in temp_map_list:
-                map.load_map()
+        gameimg =  pygame.image.load('./imgs/Background1.jpeg')
+        self.window.blit(gameimg,(0,0))
 
 
     def display_help_text(self):
         text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 60, (255, 0, 0))
-        self.window.blit(text1, (5, 5))
+        self.window.blit(text1, (1000, 5))
 
 
     def draw_text(self, content, size, color):

@@ -16,8 +16,8 @@ class GameController(PygameController):
         pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
 
     def setup(self):
-        self.map_points_list = []
-        self.map_list = []
+        self.cord_list = []
+        self.grid_list = []
         self.level = 1
         self.score = 0
         self.remnant_score = 100
@@ -29,7 +29,7 @@ class GameController(PygameController):
         self.lycheespike_list = []
         self.zombie_list = []
         self.count_zombie = 0
-        self.produce_zombie = 100
+        self.produce_zombie = 500
         self.GAMEOVER  = False
 
 
@@ -37,22 +37,19 @@ class GameController(PygameController):
         """Create cordiantion"""
         for y in range(1, 7):
             points = []
-            for x in range(10):
+            for x in range(13):
                 point = (x, y)
                 points.append(point)
-            self.map_points_list.append(points)
+            self.cord_list.append(points)
 
-    def init_map(self):
+    def init_grid(self):
         """Create map list with nest loop"""
-        for points in self.map_points_list:
-            column_map_list = []
+        for points in self.cord_list:
+            column_grid_list = []
             for point in points:
-                if (point[0]+point[1]) % 2 == 0: #if its x position + y position is even, i will draw light green
-                    gamemap = Map(point[0] * 80, point[1] * 80, 0, self.MainView)
-                else: #if its  x position + y position is odd, i will draw dark green here
-                    gamemap = Map(point[0] * 80, point[1] * 80, 1, self.MainView)
-                column_map_list.append(gamemap)
-            self.map_list.append(column_map_list)
+                    grid = Map(point[0] * 80, point[1] * 80)
+                    column_grid_list.append(grid)
+            self.grid_list.append(column_grid_list)
 
 
     def init_zombies(self):
@@ -63,11 +60,11 @@ class GameController(PygameController):
         time_count = 0
         for i in range(1, 7):
             normaldis = random.randint(1,3) * 200
-            normalzombie = Norzombie(800 + normaldis, i * 80, self, self.MainView)
+            normalzombie = Norzombie(1000+ normaldis, i * 80, self, self.MainView)
             bucketdis = random.randint(4,6) * 200
-            buckethead = Buckethead(800 + bucketdis, i * 80, self, self.MainView)
+            buckethead = Buckethead(1000 + bucketdis, i * 80, self, self.MainView)
             newsdis = random.randint(3,6) * 100
-            newspaper = Newspaper(800 + newsdis, i * 80, self, self.MainView)
+            newspaper = Newspaper(1000 + newsdis, i * 80, self, self.MainView)
             news = time_count // 5
             buck = time_count // 10
             if news != 0 or buck != 0 or time_count == 0:
@@ -81,12 +78,6 @@ class GameController(PygameController):
                 time_count += 2
 
 ###-------create part done-------------------------------------
-
-    def load_map(self):
-        for temp_map_list in self.map_list:
-            for map in temp_map_list:
-                map.load_map()
-
 
     def load_plants(self):
         """Check plants live then check type, then take action. if it is dead, remove from plant list"""
@@ -158,61 +149,65 @@ class GameController(PygameController):
             elif e.type == pygame.KEYDOWN:
                 #trasnfer cordinate to position mark here, 
                 x, y = pygame.mouse.get_pos()
-                x = x // 80
-                y = y // 80
-                #locate which piece of map that plyer mouse clicks 
-                gamemap = self.map_list[y - 1][x]
-            
-                if e.key == pygame.K_1: #create sunflower
-                    condition = gamemap.can_grow and self.money >= 50
-                    if condition:
-                        self.plant_sound.play()
-                        sunflower = Sunflower(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                        self.plants_list.append(sunflower)
-                        gamemap.can_grow = False
-                        self.money -= 50
-
-                if e.key == pygame.K_2: #create peashooter
-                    condition = gamemap.can_grow and self.money >= 50
-                    if condition:
-                        self.plant_sound.play()
-                        peashooter = PeaShooter(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                        self.plants_list.append(peashooter)
-                        gamemap.can_grow = False
-                        self.money -= 50
+                if 255 < x < 1000 and 60 < y < 580:
+                    x = x // 80
+                    y = y // 100
+                    #locate which piece of map that plyer mouse clicks 
+                    grid = self.grid_list[y - 1][x]
                 
-                if e.key == pygame.K_3: #create snowpea
-                    condition = gamemap.can_grow and self.money >= 60
-                    if condition:
-                        self.plant_sound.play()
-                        snowpea = SnowPea(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                        self.plants_list.append(snowpea)
-                        gamemap.can_grow = False
-                        self.money -= 60
+                    if e.key == pygame.K_1: #create sunflower
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            sunflower = Sunflower(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(sunflower)
+                            grid.can_grow = False
+                            self.money -= 50
 
-                if e.key == pygame.K_4: #create walnut
-                    condition = gamemap.can_grow and self.money >= 50
-                    if condition:
-                        self.plant_sound.play()
-                        wallnut = Wallnut(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                        self.plants_list.append(wallnut)
-                        gamemap.can_grow = False
-                        self.money -= 50
-                
-                if e.key == pygame.K_5: #create Lychee Bomb
-                    condition = gamemap.can_grow and self.money >= 150
-                    if condition:
-                        self.plant_sound.play()
-                        lychee = LycheeBomb(gamemap.position[0], gamemap.position[1], self, self.MainView)
-                        self.plants_list.append(lychee)
-                        gamemap.can_grow = False
-                        self.money -= 150
+                    if e.key == pygame.K_2: #create peashooter
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            peashooter = PeaShooter(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(peashooter)
+                            grid.can_grow = False
+                            self.money -= 50
+                    
+                    if e.key == pygame.K_3: #create snowpea
+                        condition = grid.can_grow and self.money >= 60
+                        if condition:
+                            self.plant_sound.play()
+                            snowpea = SnowPea(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(snowpea)
+                            grid.can_grow = False
+                            self.money -= 60
+
+                    if e.key == pygame.K_4: #create walnut
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            wallnut = Wallnut(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(wallnut)
+                            grid.can_grow = False
+                            self.money -= 50
+                    
+                    if e.key == pygame.K_5: #create Lychee Bomb
+                        condition = grid.can_grow and self.money >= 150
+                        if condition:
+                            self.plant_sound.play()
+                            lychee = LycheeBomb(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(lychee)
+                            grid.can_grow = False
+                            self.money -= 150
     
     
     def load_game(self):
+        self.window = pygame.display.set_mode([1400, 560])
+        gameimg =  pygame.image.load('./imgs/Background1.jpeg')
+        self.MainView.window.blit(gameimg,(0,0))
         self.setup()
         self.init_plant_points()
-        self.init_map()
+        self.init_grid()
         self.init_zombies()
         mixer.init()
         mixer.music.load("./sounds/04 Grasswalk.wav")
@@ -228,12 +223,11 @@ class GameController(PygameController):
             if self.count_zombie == self.produce_zombie:
                 self.init_zombies()
                 self.count_zombie = 0
-            grass_img =  pygame.image.load('./imgs/grass.jpg')
-            self.MainView.window.blit(grass_img, (0,0))
             self.MainView.display()
             self.MainView.display_update()
 
     def main_menu(self):
+        self.window = pygame.display.set_mode([800, 560])
         self.MainView.init_window()
         mixer.init()
         mixer.music.load("./sounds/lobby.wav")
@@ -317,9 +311,11 @@ class GameController(PygameController):
 
 
     def endgame(self):
+
         self.save_score()
         waiting = True
         while waiting:
+            self.window = pygame.display.set_mode([800, 560])
             end_img = pygame.image.load('./imgs/gameover.jpg')
             self.MainView.window.blit(end_img, (0,0))
             pygame.display.flip()

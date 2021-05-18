@@ -45,7 +45,7 @@ class LycheeBomb(Plant):
                 # Reset planting ability
                 a = self.rect.y // 80 - 1
                 b = self.rect.x // 80
-                map = self.MainGame.map_list[a][b]
+                map = self.MainGame.grid_list[a][b]
                 map.can_grow = True
                 
                 self.live = False

@@ -23,7 +23,7 @@ class PeaShooter(Plant):
 
         should_fire = False
         for zombie in self.MainGame.zombie_list:
-            if zombie.rect.y == self.rect.y and zombie.rect.x < 800 and zombie.rect.x > self.rect.x:
+            if zombie.rect.y == self.rect.y and zombie.rect.x < 1050 and zombie.rect.x > self.rect.x:
                 should_fire = True
 
         if self.live and should_fire:
