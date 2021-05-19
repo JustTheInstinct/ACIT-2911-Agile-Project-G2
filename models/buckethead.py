@@ -24,7 +24,7 @@ class Buckethead(Zombie):
         if self.live and not self.stop:
             self.rect.x -= self.speed
             if self.rect.x < 220:
-                self.MainGame.endgame()
+                self.MainGame.GAMEOVER  = True
 
 
     def hit_plant(self):

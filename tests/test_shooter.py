@@ -1,5 +1,4 @@
-from _pytest.pytester import LsofFdLeakChecker
-import pytest, pygame
+import pytest
 from models import PeaShooter, Norzombie
 from pygame import mixer
 
@@ -11,7 +10,6 @@ class Mg:
         self.zombie_list = ['Normalzombie']
         self.plants_list = ['Peashooter']
         self.hp = 100
-        # mixer.init()
 
 zombie = Norzombie(200,100, Mg(1000), 'MainView')
 

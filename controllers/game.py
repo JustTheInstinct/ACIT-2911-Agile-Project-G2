@@ -228,6 +228,7 @@ class GameController(PygameController):
                 self.count_zombie = 0
             self.MainView.display()
             self.MainView.display_update()
+        self.endgame()
 
     def main_menu(self):
         """load game menu and track user actions on main menu"""
