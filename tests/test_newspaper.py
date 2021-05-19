@@ -28,3 +28,4 @@ def test_news_move():
     new_paper = Newspaper(1,1,mg,'mainview')
     new_paper.move_zombie()
     assert new_paper.rect.x == 0
+    assert new_paper.MainGame.GAMEOVER == True
