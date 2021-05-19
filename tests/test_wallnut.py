@@ -1,5 +1,5 @@
 import pytest
-from ..models import Wallnut
+from models import Wallnut
 
 class Mg:
     def __init__(self, money):
@@ -18,4 +18,4 @@ def test_init(wl):
     assert wl.rect.x == 0
     assert wl.rect.y == 0
     assert wl.price == 50
-    assert wl.hp == 500
+    assert wl.hp == 1000

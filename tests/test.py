@@ -55,7 +55,7 @@ def test_bucket_move():
     new_buckethead = Buckethead(1,1,mg,'mainview')
     new_buckethead.move_zombie()
     assert new_buckethead.rect.x == 0
-
+    
 def test_spike_att():
     new_bomb=LycheeBomb(1,1,mg,'mainview')
     new_spike = LycheeSpike(new_bomb,mg,'mainView')

@@ -21,7 +21,7 @@ def process_scores(players):
     return dict_list
 
 def get_scores():
-    filename = 'pvzscore.csv'
+    filename = 'webapp/pvzscore.csv'
     data = load_scores(filename)
     scores = process_scores(data)
     return scores
