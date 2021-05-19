@@ -7,7 +7,7 @@ from .icebullet import IceBullet
 class SnowPea(Plant):
     def __init__(self, x, y, MainGame, MainView):
         super(SnowPea, self).__init__(MainGame, MainView)
-        mixer.init()
+        
         self.image = pygame.image.load('./imgs/snowpea.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
