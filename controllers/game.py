@@ -13,8 +13,17 @@ class GameController(PygameController):
         self.difficulty = 1
         self.setup()
         self.MainView = MainView(self)
+
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
+        self.day_sound = mixer.Sound("./sounds/day.mp3")
+        self.night_sound = mixer.Sound("./sounds/night.mp3")
+        self.background_sound = mixer.Sound("./sounds/background.mp3")
+        self.credit_sound = mixer.Sound("./sounds/credit.mp3")
+        self.end_sound = mixer.Sound("./sounds/end.wav")
+        self.button_sound = mixer.Sound("./sounds/mode.mp3")
+
         pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
+
 
     def setup(self):
         """default game settings"""
@@ -210,10 +219,12 @@ class GameController(PygameController):
         self.init_plant_points()
         self.init_grid()
         self.init_zombies()
-        mixer.init()
-        mixer.music.load("./sounds/04 Grasswalk.wav")
-        mixer.music.play(-1)
+        if self.difficulty == 2:
+            self.night_sound.play()
+        else:
+            self.day_sound.play()
         pygame.display.flip()
+
         while not self.GAMEOVER:
             self.load_plants()
             self.load_bullets()
@@ -231,9 +242,7 @@ class GameController(PygameController):
     def main_menu(self):
         """load game menu and track user actions on main menu"""
         self.MainView.display_menu()
-        mixer.init()
-        mixer.music.load("./sounds/lobby.wav")
-        mixer.music.play(-1)
+        self.background_sound.play(-1)
         waiting = True
         while waiting:
             for event in pygame.event.get():
@@ -241,16 +250,26 @@ class GameController(PygameController):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if 89 < x < 287 and 267 < y < 362:
                         self.GAMEOVER = False
+                        self.button_sound.play()
+                        self.background_sound.stop()
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
+                        self.button_sound.play()
                         webbrowser.open_new("https://acit-2911-agile-project-g2.herokuapp.com/scoreboard")
-                    elif 648 < x < 757 and 355 < y < 400: # about
+                    elif 648 < x < 757 and 355 < y < 400: 
+                        self.button_sound.play()
+                        self.background_sound.stop()
                         self.aboutus()
-                    elif 117 < x < 287 and 372 < y < 443: # Homepage
+                    elif 117 < x < 287 and 372 < y < 443: 
+                        self.button_sound.play()
+                        self.background_sound.stop()
                         self.hard_mode()
                     elif 574 < x < 632 and 444 < y < 540:
+                        self.button_sound.play()
+                        self.background_sound.stop()
                         self.help()
                     elif 489 < x < 559 and 444 < y < 540:
+                        self.button_sound.play()
                         exit()
                 elif event.type == pygame.QUIT:
                     pygame.quit()
@@ -265,12 +284,15 @@ class GameController(PygameController):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     if 108 < x < 196 and 324 < y < 369:
+                        self.button_sound.play()
                         self.difficulty = 0
                         self.MainView.display_mode()
                     elif 320 < x < 478 and 330 < y < 360:
+                        self.button_sound.play()
                         self.difficulty = 1
                         self.MainView.display_mode()
                     elif 596 < x < 705 and 330 < y < 360:
+                        self.button_sound.play()
                         self.difficulty = 2
                         self.MainView.display_mode()
                 elif event.type == pygame.QUIT:
@@ -286,22 +308,24 @@ class GameController(PygameController):
                  if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     if 531 < x < 687 and 491 < y < 521:
+                        self.button_sound.play()
                         runing = False
                         self.main_menu()
 
     def aboutus(self):
         """show project team members in rolling credits"""
-        x = self.MainView.window.get_rect().centerx 
+        x = self.MainView.window.get_rect().centerx + 60
         y = self.MainView.window.get_rect().centery
         startpos  = y + 50
         running =True
+        self.credit_sound.play()
         while running:
             self.MainView.display_background()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    self.credit_sound.stop()
                     self.main_menu()
-
             startpos -= 2
             i=0
             name_list=[]
@@ -329,10 +353,13 @@ class GameController(PygameController):
             score.writerow([f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}'])
             player_file.close()
 
-
     def endgame(self):
         """show game over screen and track players actions"""
+        self.GAMEOVER = True
         self.save_score()
+        self.night_sound.stop()
+        self.day_sound.stop()
+        self.end_sound.play(0)
         waiting = True
         self.MainView.display_endscreen()
         while waiting:
@@ -340,10 +367,12 @@ class GameController(PygameController):
                 x, y = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if 159 < x < 324 and 506 < y < 537:
+                        self.button_sound.play()
                         waiting = False # restart
                         self.GAMEOVER  = False
                         self.load_game()
                     elif 447 < x < 618 and 506 < y < 537:
+                        self.button_sound.play()
                         waiting = False
                         self.GAMEOVER  = False
                         self.main_menu() # main menu
