@@ -150,7 +150,6 @@ class GameController(PygameController):
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
-
             elif e.type == pygame.KEYDOWN:
                 #trasnfer cordinate to position mark here, 
                 x, y = pygame.mouse.get_pos()
@@ -159,7 +158,6 @@ class GameController(PygameController):
                     y = y // 100
                     #locate which piece of map that plyer mouse clicks 
                     grid = self.grid_list[y - 1][x]
-                
                     if e.key == pygame.K_1: #create sunflower
                         condition = grid.can_grow and self.money >= 50
                         if condition:
@@ -245,7 +243,7 @@ class GameController(PygameController):
                         self.GAMEOVER = False
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
-                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com/scoreboard")
+                        webbrowser.open_new("https://acit-2911-agile-project-g2.herokuapp.com/scoreboard")
                     elif 648 < x < 757 and 355 < y < 400: # about
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
