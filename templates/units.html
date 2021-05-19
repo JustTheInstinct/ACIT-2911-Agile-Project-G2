@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block main %}
+    <div class='plantTable'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Plant</th>
+                    <th>Appearance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pea Shooter</td>
+                    <td><img src="{{ url_for('static', filename='images/peashooter.png') }}"  alt=""></td>
+                    <td>It shoots peas!</td>
+                </tr>
+                <tr>
+                    <td>Snow Pea</td>
+                    <td><img src="{{ url_for('static', filename='images/snowpea.png') }}"  alt=''></td>
+                    <td>Shoots peas that freeze zombies.</td>
+                </tr>
+                <tr>
+                    <td>Sunflower</td>
+                    <td><img src="{{ url_for('static', filename='images/sunflower.png') }}"  alt=''></td>
+                    <td>Periodically generates gold.</td>
+                </tr>
+                <tr>
+                    <td>Wallnut</td>
+                    <td><img src="{{ url_for('static', filename='images/wall_nut.png') }}" ></td>
+                    <td>Blocks zombies.</td>
+                </tr>
+                <tr>
+                    <td>Lychee Bomb</td>
+                    <td><img src="{{ url_for('static', filename='images/lychee_bomb.png') }}"></td>
+                    <td>Explodes and damages zombies in a 9x9 square.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='zombieTable'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Zombie</th>
+                    <th>Appearance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Regular</td>
+                    <td><img src="{{ url_for('static', filename='images/zombie.png') }}" ></td>
+                    <td>Just a regular zombie.</td>
+                </tr>
+                <tr>
+                    <td>Buckethead</td>
+                    <td><img src="{{ url_for('static', filename='images/buckethead.png') }}"></td>
+                    <td>A tankier zombie! Loses its bucket helmet at 80% health and its head at 20%.</td>
+                </tr>
+                <tr>
+                    <td>Newspaper</td>
+                    <td><img src="{{ url_for('static', filename='images/newspaper.png') }}"></td>
+                    <td>Speeds up after its newspaper is destroyed.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
