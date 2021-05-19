@@ -3,7 +3,6 @@ from pygame import mixer
 
 class LycheeSpike(pygame.sprite.Sprite):
     def __init__(self, lychee_bomb, MainGame, MainView):
-        mixer.init()
         self.live = True
         self.image = pygame.image.load('./imgs/lychee_spike.png') # Change this
         self.damage = 500
