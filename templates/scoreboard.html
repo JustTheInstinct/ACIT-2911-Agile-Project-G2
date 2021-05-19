@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block main %}
+    <div class='scoreboardHeader'>Scoreboard</div>
+    <table class="scoreboard">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Level</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in scores %}
+            <tr>
+                <td><a href="{{ url_for('.player', player_id=score.id) }}" class='scores'>{{score.name}}</a></td>
+                <td>{{score.id}}</td>
+                <td>{{score.level}}</td>
+                <td>{{score.score}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
