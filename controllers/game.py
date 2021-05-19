@@ -245,7 +245,7 @@ class GameController(PygameController):
                         self.GAMEOVER = False
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
-                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com/scoreboard")
+                        webbrowser.open_new("https://acit-2911-agile-project-g2.herokuapp.com/scoreboard")
                     elif 648 < x < 757 and 355 < y < 400: # about
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
