@@ -13,10 +13,16 @@ class PeaBullet(pygame.sprite.Sprite):
         self.rect.y = peashooter.rect.y + 15
         self.MainGame = MainGame
         self.MainView = MainView
+
+    def hitsound(self):
         self.hit_sound = mixer.Sound("./sounds/splat3.wav")
         pygame.mixer.Sound.set_volume(self.hit_sound, 0.3)
+        self.hit_sound.play()
+    
+    def killsound(self):
         self.kill_sound = mixer.Sound("./sounds/splat.wav")
         pygame.mixer.Sound.set_volume(self.kill_sound, 0.3)
+        self.kill_sound.play()
 
     def move_bullet(self):
         if self.rect.x < 800:
@@ -24,18 +30,16 @@ class PeaBullet(pygame.sprite.Sprite):
         else:
             self.live = False
 
-
     def hit_zombie(self):
         for zombie in self.MainGame.zombie_list:
             if pygame.sprite.collide_rect(self,zombie):
-                self.hit_sound.play()
+                self.hitsound()
                 self.live = False
                 zombie.hp -= self.damage
                 if zombie.hp <= 0:
-                    self.kill_sound.play()
+                    self.killsound()
                     zombie.live = False
                     self.nextLevel()
-
 
     def nextLevel(self):
         self.MainGame.score += 20 # get 20 score for each zombie killed
@@ -45,7 +49,6 @@ class PeaBullet(pygame.sprite.Sprite):
                     self.MainGame.remnant_score=100*i
                     self.MainGame.level+=1
                     self.MainGame.produce_zombie+=50
-
 
     def display_peabullet(self):
         self.MainView.window.blit(self.image,self.rect)

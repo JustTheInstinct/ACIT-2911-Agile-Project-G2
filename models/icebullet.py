@@ -7,16 +7,22 @@ class IceBullet(pygame.sprite.Sprite):
         self.live = True
         self.image = pygame.image.load('./imgs/icebullet.png')
         self.damage = 10
-        self.speed  = 3
+        self.speed  = 5
         self.rect = self.image.get_rect()
         self.rect.x = snowpea.rect.x + 60
         self.rect.y = snowpea.rect.y + 15
         self.MainGame = MainGame
         self.MainView = MainView
+
+    def hitsound(self):
         self.hit_sound = mixer.Sound("./sounds/splat3.wav")
         pygame.mixer.Sound.set_volume(self.hit_sound, 0.3)
+        self.hit_sound.play()
+    
+    def killsound(self):
         self.kill_sound = mixer.Sound("./sounds/splat.wav")
         pygame.mixer.Sound.set_volume(self.kill_sound, 0.3)
+        self.kill_sound.play()
 
     def move_bullet(self):
         if self.rect.x < 800:
@@ -24,16 +30,16 @@ class IceBullet(pygame.sprite.Sprite):
         else:
             self.live = False
 
-
     def hit_zombie(self):
         for zombie in self.MainGame.zombie_list:
             if pygame.sprite.collide_rect(self,zombie):
-                self.hit_sound.play()
+                self.hitsound()
                 self.live = False
                 zombie.hp -= self.damage
                 if zombie.speed >= 0:
-                    zombie.speed =- 0.6
+                    zombie.speed -= 0.6
                 if zombie.hp <= 0:
+                    self.killsound()
                     zombie.live = False
                     self.nextLevel()
 
