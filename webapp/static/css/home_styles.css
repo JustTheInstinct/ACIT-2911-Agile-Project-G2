@@ -195,7 +195,7 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-rows: 270px 80% 5%;
+    grid-template-rows: 40px 270px 40px 80% 5%;
     grid-template-columns: 1fr 1500px 1fr;
     height: 1100px;
     width: 100vw;
@@ -208,7 +208,7 @@ h1 {
     padding-left: 10px;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-row: 2 / 3;
+    grid-row: 4 / 5;
     grid-column: 2 / 3;
     background-color: #8FBC8F;
     border: 3px solid black;
@@ -216,7 +216,7 @@ h1 {
 
 .general-info {
     background-color: #8FBC8F;
-    grid-row: 1 / 2;
+    grid-row: 2 / 3;
     grid-column: 2 / 3;
     border: 3px solid black;
 }
@@ -234,7 +234,7 @@ h1 {
 }
 
 footer {
-    grid-row: 3 / 4;
+    grid-row: 5 / 6;
     grid-column: 1 / 5;
     bottom: 0;
     height: 100%;
