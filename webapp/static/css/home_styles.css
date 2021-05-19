@@ -126,6 +126,28 @@ td {
      1px 1px 0 #000;
 }
 
+.oglink {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 90%;
+    width: 380px;
+    background-color: #8FBC8F;
+    border: 2px solid black;
+    padding-left: 0.5rem;
+}
+
+.oglink p {
+    padding-top: 5px;
+    margin-bottom: 5px;
+    font-size: 25px;
+    text-shadow:
+     1px 2px 0 #000,
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
 .scoreboardHeader {
     margin-top: 1rem;
     margin-left: 2rem;
@@ -219,9 +241,3 @@ footer {
     width: 100%;
     text-align: center;
 }
-
-
-
-
-
-
