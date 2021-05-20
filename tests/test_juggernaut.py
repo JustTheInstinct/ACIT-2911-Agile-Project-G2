@@ -14,11 +14,6 @@ def test_jug_att():
     new_jug = Juggernaut(5, 1, mg, 'mainview')
     assert new_jug.live == True and new_jug.hp == 10000
 
-def test_jug_eat():
-    new_jug = Juggernaut(5,1,mg,'mainview')
-    new_jug.eat_plant(mg)
-    assert new_jug.stop == False
-
 def test_jug_move():
     new_jug = Juggernaut(1,1,mg,'mainview')
     new_jug.move_zombie()
