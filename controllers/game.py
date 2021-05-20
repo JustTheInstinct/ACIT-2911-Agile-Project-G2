@@ -13,6 +13,7 @@ class GameController(PygameController):
         self.difficulty = 1
         self.setup()
         self.MainView = MainView(self)
+        self.muted = False
 
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
         self.day_sound = mixer.Sound("./sounds/day.mp3")
@@ -219,9 +220,9 @@ class GameController(PygameController):
         self.init_plant_points()
         self.init_grid()
         self.init_zombies()
-        if self.difficulty == 2:
+        if self.difficulty == 2 and not self.muted:
             self.night_sound.play()
-        else:
+        elif self.difficulty == 1 or self.difficulty == 0 and not self.muted:
             self.day_sound.play()
         pygame.display.flip()
 
@@ -242,7 +243,8 @@ class GameController(PygameController):
     def main_menu(self):
         """load game menu and track user actions on main menu"""
         self.MainView.display_menu()
-        self.background_sound.play(-1)
+        if not self.muted:
+            self.background_sound.play(-1)
         waiting = True
         while waiting:
             for event in pygame.event.get():
@@ -256,21 +258,28 @@ class GameController(PygameController):
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
                         self.button_sound.play()
                         webbrowser.open_new("https://acit-2911-agile-project-g2.herokuapp.com/scoreboard")
-                    elif 648 < x < 757 and 355 < y < 400: 
-                        self.button_sound.play()
+                    elif 539 < x < 583 and 385 < y < 428: 
                         self.background_sound.stop()
-                        self.aboutus()
+                        self.muted = True
                     elif 117 < x < 287 and 372 < y < 443: 
                         self.button_sound.play()
                         self.background_sound.stop()
                         self.hard_mode()
-                    elif 574 < x < 632 and 444 < y < 540:
+                    elif 492 < x < 532 and 434 < y < 477: 
                         self.button_sound.play()
                         self.background_sound.stop()
                         self.help()
-                    elif 489 < x < 559 and 444 < y < 540:
+                    elif 647 < x < 758 and 373 < y < 409: 
                         self.button_sound.play()
                         exit()
+                    elif 595 < x < 646 and 431 < y < 481: 
+                        self.button_sound.play()
+                        self.background_sound.stop()
+                        self.aboutus()
+                    elif 452 < x < 498 and 383 < y < 426: 
+                        self.muted = False
+                        self.background_sound.play()
+                        print(self.muted)
                 elif event.type == pygame.QUIT:
                     pygame.quit()
     
@@ -283,15 +292,15 @@ class GameController(PygameController):
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
-                    if 108 < x < 196 and 324 < y < 369:
+                    if 373 < x < 523 and 240 < y < 282:
                         self.button_sound.play()
                         self.difficulty = 0
                         self.MainView.display_mode()
-                    elif 320 < x < 478 and 330 < y < 360:
+                    elif 373 < x < 523 and 303 < y < 337:
                         self.button_sound.play()
                         self.difficulty = 1
                         self.MainView.display_mode()
-                    elif 596 < x < 705 and 330 < y < 360:
+                    elif 373 < x < 523 and 366 < y < 403:
                         self.button_sound.play()
                         self.difficulty = 2
                         self.MainView.display_mode()
@@ -318,7 +327,8 @@ class GameController(PygameController):
         y = self.MainView.window.get_rect().centery
         startpos  = y + 50
         running =True
-        self.credit_sound.play()
+        if not self.muted:
+            self.credit_sound.play()
         while running:
             self.MainView.display_background()
             for event in pygame.event.get():
@@ -366,12 +376,12 @@ class GameController(PygameController):
             for event in pygame.event.get():
                 x, y = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if 159 < x < 324 and 506 < y < 537:
+                    if 436 < x < 511 and 466 < y < 497:
                         self.button_sound.play()
                         waiting = False # restart
                         self.GAMEOVER  = False
                         self.load_game()
-                    elif 447 < x < 618 and 506 < y < 537:
+                    elif 285 < x < 386 and 466 < y < 497:
                         self.button_sound.play()
                         waiting = False
                         self.GAMEOVER  = False
