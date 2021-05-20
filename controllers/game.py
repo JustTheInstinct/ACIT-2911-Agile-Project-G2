@@ -1,11 +1,14 @@
 from controllers.base import PygameController
-from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper
+from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut
 from views import MainView
 import webbrowser, pygame, uuid, random, csv
 from pygame import mixer
 
 
 class GameController(PygameController):
+
+###------- game setup ----------------------------------
+
     def __init__(self, username):
         mixer.init()
         self.username = username
@@ -14,7 +17,9 @@ class GameController(PygameController):
         self.setup()
         self.MainView = MainView(self)
         self.muted = False
+        self.create_sound()
 
+    def create_sound(self):
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
         self.day_sound = mixer.Sound("./sounds/day.mp3")
         self.night_sound = mixer.Sound("./sounds/night.mp3")
@@ -22,9 +27,13 @@ class GameController(PygameController):
         self.credit_sound = mixer.Sound("./sounds/credit.mp3")
         self.end_sound = mixer.Sound("./sounds/end.wav")
         self.button_sound = mixer.Sound("./sounds/mode.mp3")
-
-        pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
-
+        pygame.mixer.Sound.set_volume(self.button_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.plant_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.background_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.day_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.night_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.credit_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.end_sound, 0.1)
 
     def setup(self):
         """default game settings"""
@@ -39,19 +48,22 @@ class GameController(PygameController):
         self.icebullet_list = []
         self.explosion_list = []
         self.lycheespike_list = []
+        self.jug_list = []
         self.zombie_list = []
         self.count_zombie = 0
+        self.count_jug = 0
         self.produce_zombie = 500
+        self.produce_jug = 4
         self.GAMEOVER  = False
         if self.difficulty == 0:
             self.money = 400
             self.produce_zombie = 600
         elif self.difficulty == 2:
-            self.money = 100
-            self.produce_zombie = 100
+            self.money = 200
+            self.produce_zombie = 400
 
     def init_plant_points(self):
-        """Create cordiantion"""
+        """Create coordination"""
         for y in range(1, 7):
             points = []
             for x in range(13):
@@ -68,6 +80,9 @@ class GameController(PygameController):
                     column_grid_list.append(grid)
             self.grid_list.append(column_grid_list)
 
+    def init_juggernut(self):
+        juggernaut = Juggernaut(1500, 240, self, self.MainView)
+        self.zombie_list.append(juggernaut)
 
     def init_zombies(self):
         """Spawn zombies"""
@@ -91,7 +106,7 @@ class GameController(PygameController):
                 self.zombie_list.append(buckethead)
                 time_count += 2
 
-###-------create part done-------------------------------------
+###------- load game unit ------------------------------
 
     def load_plants(self):
         """Check plants live then check type, then take action. if it is dead, remove from plant list"""
@@ -121,7 +136,17 @@ class GameController(PygameController):
                 zombie.move_zombie()
                 zombie.hit_plant()
             else:
-                self.zombie_list.remove(zombie)
+                if isinstance(zombie, Juggernaut) and not zombie.live:
+                    self.count_jug = 0
+                    self.zombie_list.remove(zombie)
+                else:
+                    self.zombie_list.remove(zombie)
+
+    def load_jug(self):
+        for jug in self.jug_list:
+            if jug.live:
+                jug.move_zombie()
+                jug.hit_plant()
 
     def load_bullets(self):
         """check bullet status, then take action. if it is dead, remove from bullet list."""
@@ -154,91 +179,7 @@ class GameController(PygameController):
             else:
                 self.explosion_list.remove(explosion)
 
-    def events_handler(self):
-        """check user actions in game interface"""
-        events = pygame.event.get()
-        for e in events:
-            if e.type == pygame.QUIT:
-                self.endgame()
-            elif e.type == pygame.KEYDOWN:
-                #trasnfer cordinate to position mark here, 
-                x, y = pygame.mouse.get_pos()
-                if 255 < x < 1000 and 60 < y < 580:
-                    x = x // 80
-                    y = y // 100
-                    #locate which piece of map that plyer mouse clicks 
-                    grid = self.grid_list[y - 1][x]
-                    if e.key == pygame.K_1: #create sunflower
-                        condition = grid.can_grow and self.money >= 50
-                        if condition:
-                            self.plant_sound.play()
-                            sunflower = Sunflower(grid.position[0], grid.position[1], self, self.MainView)
-                            self.plants_list.append(sunflower)
-                            grid.can_grow = False
-                            self.money -= 50
-
-                    if e.key == pygame.K_2: #create peashooter
-                        condition = grid.can_grow and self.money >= 50
-                        if condition:
-                            self.plant_sound.play()
-                            peashooter = PeaShooter(grid.position[0], grid.position[1], self, self.MainView)
-                            self.plants_list.append(peashooter)
-                            grid.can_grow = False
-                            self.money -= 50
-                    
-                    if e.key == pygame.K_3: #create snowpea
-                        condition = grid.can_grow and self.money >= 60
-                        if condition:
-                            self.plant_sound.play()
-                            snowpea = SnowPea(grid.position[0], grid.position[1], self, self.MainView)
-                            self.plants_list.append(snowpea)
-                            grid.can_grow = False
-                            self.money -= 60
-
-                    if e.key == pygame.K_4: #create walnut
-                        condition = grid.can_grow and self.money >= 50
-                        if condition:
-                            self.plant_sound.play()
-                            wallnut = Wallnut(grid.position[0], grid.position[1], self, self.MainView)
-                            self.plants_list.append(wallnut)
-                            grid.can_grow = False
-                            self.money -= 50
-                    
-                    if e.key == pygame.K_5: #create Lychee Bomb
-                        condition = grid.can_grow and self.money >= 150
-                        if condition:
-                            self.plant_sound.play()
-                            lychee = LycheeBomb(grid.position[0], grid.position[1], self, self.MainView)
-                            self.plants_list.append(lychee)
-                            grid.can_grow = False
-                            self.money -= 150
-    
-    def load_game(self):
-        """load game interface, game start"""
-        self.window = pygame.display.set_mode([1400, 560])
-        self.setup()
-        self.init_plant_points()
-        self.init_grid()
-        self.init_zombies()
-        if self.difficulty == 2 and not self.muted:
-            self.night_sound.play()
-        elif self.difficulty == 1 or self.difficulty == 0 and not self.muted:
-            self.day_sound.play()
-        pygame.display.flip()
-
-        while not self.GAMEOVER:
-            self.load_plants()
-            self.load_bullets()
-            self.load_explosions()
-            self.events_handler()
-            self.load_zombies()
-            self.count_zombie += 1
-            if self.count_zombie == self.produce_zombie:
-                self.init_zombies()
-                self.count_zombie = 0
-            self.MainView.display()
-            self.MainView.display_update()
-        self.endgame()
+###------- Game menu setup -----------------------------
 
     def main_menu(self):
         """load game menu and track user actions on main menu"""
@@ -279,7 +220,6 @@ class GameController(PygameController):
                     elif 452 < x < 498 and 383 < y < 426: 
                         self.muted = False
                         self.background_sound.play()
-                        print(self.muted)
                 elif event.type == pygame.QUIT:
                     pygame.quit()
     
@@ -355,6 +295,105 @@ class GameController(PygameController):
             for j in range(i):
                 self.MainView.window.blit(name_list[j], position_list[j])     
             pygame.display.update()
+
+###------- Main game event -----------------------------
+    def load_game(self):
+        """load game interface, game start"""
+        self.window = pygame.display.set_mode([1400, 560])
+        self.setup()
+        self.init_plant_points()
+        self.init_grid()
+        self.init_zombies()
+        if self.difficulty == 2 and not self.muted:
+            self.night_sound.play()
+        elif self.difficulty == 1 and not self.muted:
+            self.day_sound.play()
+        elif self.difficulty == 0 and not self.muted:
+            self.day_sound.play()
+
+        while not self.GAMEOVER:
+            self.load_plants()
+            self.load_bullets()
+            self.load_explosions()
+            self.events_handler()
+            self.load_zombies()
+            self.load_jug()
+            self.count_zombie += 1
+
+            if self.count_zombie == self.produce_zombie:
+                self.init_zombies()
+                self.count_zombie = 0
+            if self.difficulty == 2 and self.level > 2 and self.level % 2 == 0 and self.count_jug != 1:
+                self.init_juggernut()
+                self.count_jug = 1
+
+            self.MainView.display()
+            self.MainView.display_update()
+        self.endgame()
+
+    def events_handler(self):
+        """check user actions in game interface"""
+        events = pygame.event.get()
+        for e in events:
+            if e.type == pygame.QUIT:
+                self.GAMEOVER = True
+                self.night_sound.stop()
+                self.day_sound.stop()
+                self.main_menu()
+
+            elif e.type == pygame.KEYDOWN:
+                #trasnfer cordinate to position mark here, 
+                x, y = pygame.mouse.get_pos()
+                if 255 < x < 1000 and 60 < y < 580:
+                    x = x // 80
+                    y = y // 100
+                    #locate which piece of map that plyer mouse clicks 
+                    grid = self.grid_list[y - 1][x]
+                
+                    if e.key == pygame.K_1: #create sunflower
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            sunflower = Sunflower(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(sunflower)
+                            grid.can_grow = False
+                            self.money -= 50
+
+                    if e.key == pygame.K_2: #create peashooter
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            peashooter = PeaShooter(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(peashooter)
+                            grid.can_grow = False
+                            self.money -= 50
+                    
+                    if e.key == pygame.K_3: #create snowpea
+                        condition = grid.can_grow and self.money >= 60
+                        if condition:
+                            self.plant_sound.play()
+                            snowpea = SnowPea(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(snowpea)
+                            grid.can_grow = False
+                            self.money -= 60
+
+                    if e.key == pygame.K_4: #create walnut
+                        condition = grid.can_grow and self.money >= 50
+                        if condition:
+                            self.plant_sound.play()
+                            wallnut = Wallnut(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(wallnut)
+                            grid.can_grow = False
+                            self.money -= 50
+                    
+                    if e.key == pygame.K_5: #create Lychee Bomb
+                        condition = grid.can_grow and self.money >= 150
+                        if condition:
+                            self.plant_sound.play()
+                            lychee = LycheeBomb(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(lychee)
+                            grid.can_grow = False
+                            self.money -= 150
 
     def save_score(self):
         """save players score"""
