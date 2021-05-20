@@ -12,6 +12,7 @@ class Explode(pygame.sprite.Sprite):
         self.rect.y = lychee_bomb.rect.y - 80
         self.MainGame = MainGame
         self.MainView = MainView
+        self.explodesound()
 
     def explodesound(self):
         self.explode_sound = mixer.Sound("./sounds/Explosion+3.wav")
@@ -21,7 +22,6 @@ class Explode(pygame.sprite.Sprite):
     def hit_zombie(self):
         for zombie in self.MainGame.zombie_list:
             if pygame.sprite.collide_rect(self,zombie):
-                self.explodesound()
                 self.live = False
                 zombie.hp -= self.damage
                 if zombie.hp <= 0:

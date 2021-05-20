@@ -29,7 +29,7 @@ class LycheeBomb(Plant):
             if self.frame_timer == 30:
                 # Spawn explosion and spikes
                 explosion = Explode(self, self.MainGame, self.MainView)
-                if self.rect.y > 80:
+                if self.rect.y > 40:
                     spike = LycheeSpike(self, self.MainGame, self.MainView)
                     self.MainGame.lycheespike_list.append(spike)
                 self.rect.x = self.rect.x + 80
@@ -43,12 +43,11 @@ class LycheeBomb(Plant):
                     self.MainGame.lycheespike_list.append(spike_three)
                 self.MainGame.explosion_list.append(explosion)
                 # Reset planting ability
-                a = self.rect.y // 80 - 1
-                b = self.rect.x // 80
-                map = self.MainGame.grid_list[a][b]
-                map.can_grow = True
-                
                 self.live = False
+            a = self.rect.y // 80 - 1
+            b = self.rect.x // 80
+            map = self.MainGame.grid_list[a][b]
+            map.can_grow = True
 
     def display_lychee_bomb(self):
         self.MainView.window.blit(self.image,self.rect)

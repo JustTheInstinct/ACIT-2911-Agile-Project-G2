@@ -24,7 +24,7 @@ class LycheeSpike(pygame.sprite.Sprite):
         self.kill_sound.play()
 
     def move_spike(self):
-        if self.rect.x < 800:
+        if self.rect.x < 1050:
             self.rect.x += self.speed
         else:
             self.live = False
