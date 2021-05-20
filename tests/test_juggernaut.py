@@ -1,5 +1,5 @@
 import pytest
-from ..models import Juggernaut
+from models import Juggernaut, Sunflower
 
 class maing():
     def __init__(self, money):
@@ -7,6 +7,7 @@ class maing():
         self.hp = 100
         self.score = 0
         self.remnant_score = 40
+        self.GAMEOVER  = False
 mg = maing(0)
 
 def test_jug_att():

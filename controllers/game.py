@@ -1,5 +1,5 @@
 from controllers.base import PygameController
-from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper
+from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut
 from views import MainView
 import webbrowser, pygame, uuid, random, csv
 from pygame import mixer
@@ -29,6 +29,7 @@ class GameController(PygameController):
         self.icebullet_list = []
         self.explosion_list = []
         self.lycheespike_list = []
+        self.juggernaut_list = []
         self.zombie_list = []
         self.count_zombie = 0
         self.produce_zombie = 500
@@ -69,9 +70,12 @@ class GameController(PygameController):
             buckethead = Buckethead(1000 + bucketdis, i * 80, self, self.MainView)
             newsdis = random.randint(3,6) * 100
             newspaper = Newspaper(1000 + newsdis, i * 80, self, self.MainView)
+            jugdis = random.randint(2,3) * 200
+            juggernaut = Juggernaut(1000 + jugdis, i * 80, self, self.MainView)
             news = time_count // 5
             buck = time_count // 10
-            if news != 0 or buck != 0 or time_count == 0:
+            jug = time_count // 5
+            if news != 0 or buck != 0 or jug != 0 or time_count == 0:
                 self.zombie_list.append(normalzombie)
                 time_count += 1
             if news == 0:
@@ -80,6 +84,9 @@ class GameController(PygameController):
             if buck // 10 == 0:
                 self.zombie_list.append(buckethead)
                 time_count += 2
+            if jug // 10 == 0 and self.difficulty == 2:
+                self.zombie_list.append(juggernaut)
+                time_count += 1
 
 ###-------create part done-------------------------------------
 
@@ -150,6 +157,7 @@ class GameController(PygameController):
         for e in events:
             if e.type == pygame.QUIT:
                 self.endgame()
+
             elif e.type == pygame.KEYDOWN:
                 #trasnfer cordinate to position mark here, 
                 x, y = pygame.mouse.get_pos()
@@ -158,6 +166,7 @@ class GameController(PygameController):
                     y = y // 100
                     #locate which piece of map that plyer mouse clicks 
                     grid = self.grid_list[y - 1][x]
+                
                     if e.key == pygame.K_1: #create sunflower
                         condition = grid.can_grow and self.money >= 50
                         if condition:
@@ -243,7 +252,7 @@ class GameController(PygameController):
                         self.GAMEOVER = False
                         self.load_game()
                     elif 306 < x < 447 and 314 < y < 401: # scoreboard
-                        webbrowser.open_new("https://acit-2911-agile-project-g2.herokuapp.com/scoreboard")
+                        webbrowser.open_new("https://agileproject-pvz.herokuapp.com/scoreboard")
                     elif 648 < x < 757 and 355 < y < 400: # about
                         self.aboutus()
                     elif 117 < x < 287 and 372 < y < 443: # Homepage
