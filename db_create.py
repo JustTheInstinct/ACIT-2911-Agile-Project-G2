@@ -1,2 +1,2 @@
-from webapp import csv
-csv.create_all()
+from webapp import db
+db.create_all()
