@@ -41,7 +41,7 @@ class LycheeSpike(pygame.sprite.Sprite):
                     self.nextLevel()
 
     def nextLevel(self):
-        self.MainGame.score += 20 # get 20 score for each zombie killed
+        self.MainGame.score += 20
         self.MainGame.remnant_score -=20
         for i in range(1,100):
             if self.MainGame.score==100*i and self.MainGame.remnant_score==0:

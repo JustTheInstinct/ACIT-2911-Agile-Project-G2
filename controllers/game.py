@@ -25,14 +25,14 @@ class GameController(PygameController):
         self.night_sound = mixer.Sound("./sounds/night.mp3")
         self.background_sound = mixer.Sound("./sounds/background.mp3")
         self.credit_sound = mixer.Sound("./sounds/credit.mp3")
-        self.end_sound = mixer.Sound("./sounds/end.wav")
+        self.end_sound = mixer.Sound("./sounds/end.mp3")
         self.button_sound = mixer.Sound("./sounds/mode.mp3")
-        pygame.mixer.Sound.set_volume(self.button_sound, 0.2)
-        pygame.mixer.Sound.set_volume(self.plant_sound, 0.2)
-        pygame.mixer.Sound.set_volume(self.background_sound, 0.2)
-        pygame.mixer.Sound.set_volume(self.day_sound, 0.2)
-        pygame.mixer.Sound.set_volume(self.night_sound, 0.2)
-        pygame.mixer.Sound.set_volume(self.credit_sound, 0.2)
+        pygame.mixer.Sound.set_volume(self.button_sound, 0.1)
+        pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
+        pygame.mixer.Sound.set_volume(self.background_sound, 0.005)
+        pygame.mixer.Sound.set_volume(self.day_sound, 0.1)
+        pygame.mixer.Sound.set_volume(self.night_sound, 0.1)
+        pygame.mixer.Sound.set_volume(self.credit_sound, 0.1)
         pygame.mixer.Sound.set_volume(self.end_sound, 0.1)
 
     def setup(self):
@@ -66,7 +66,7 @@ class GameController(PygameController):
         """Create coordination"""
         for y in range(1, 7):
             points = []
-            for x in range(13):
+            for x in range(12):
                 point = (x, y)
                 points.append(point)
             self.cord_list.append(points)
@@ -136,7 +136,7 @@ class GameController(PygameController):
                 zombie.move_zombie()
                 zombie.hit_plant()
             else:
-                if isinstance(zombie, Juggernaut) and not zombie.live:
+                if isinstance(zombie, Juggernaut):
                     self.count_jug = 0
                     self.zombie_list.remove(zombie)
                 else:
@@ -228,7 +228,6 @@ class GameController(PygameController):
         waiting = True
         while waiting:
             self.MainView.display_mode()
-            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
@@ -244,6 +243,9 @@ class GameController(PygameController):
                         self.button_sound.play()
                         self.difficulty = 2
                         self.MainView.display_mode()
+                    elif 611 < x < 712 and 483 < y < 509:
+                        self.button_sound.play()
+                        self.main_menu()
                 elif event.type == pygame.QUIT:
                         waiting = False
                         self.main_menu()
@@ -310,6 +312,7 @@ class GameController(PygameController):
             self.day_sound.play()
         elif self.difficulty == 0 and not self.muted:
             self.day_sound.play()
+        pygame.display.flip()
 
         while not self.GAMEOVER:
             self.load_plants()
@@ -337,16 +340,14 @@ class GameController(PygameController):
         for e in events:
             if e.type == pygame.QUIT:
                 self.GAMEOVER = True
-                self.night_sound.stop()
-                self.day_sound.stop()
-                self.main_menu()
+                self.endgame()
 
             elif e.type == pygame.KEYDOWN:
                 #trasnfer cordinate to position mark here, 
                 x, y = pygame.mouse.get_pos()
-                if 255 < x < 1000 and 60 < y < 580:
+                if 255 < x < 960 and 60 < y < 580:
                     x = x // 80
-                    y = y // 100
+                    y = y // 80
                     #locate which piece of map that plyer mouse clicks 
                     grid = self.grid_list[y - 1][x]
                 
@@ -425,3 +426,5 @@ class GameController(PygameController):
                         waiting = False
                         self.GAMEOVER  = False
                         self.main_menu() # main menu
+                elif event.type == pygame.QUIT:
+                    self.main_menu()
