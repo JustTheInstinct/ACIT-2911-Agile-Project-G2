@@ -4,7 +4,10 @@ import pygame
 class Sunflower(Plant):
     def __init__(self,x,y, MainGame, MainView):
         super(Sunflower, self).__init__(MainGame, MainView)
-        self.image = pygame.image.load('./imgs/sunflower.png')
+        if self.MainGame.difficulty == 2:
+            self.image = pygame.image.load('./imgs/sunflowernight.png')
+        else:
+            self.image = pygame.image.load('./imgs/sunflowerday.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
