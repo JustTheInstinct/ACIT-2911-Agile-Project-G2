@@ -7,7 +7,7 @@ from pygame import mixer
 class LycheeBomb(Plant):
     def __init__(self,x,y, MainGame, MainView):
         super(LycheeBomb, self).__init__(MainGame, MainView)
-        mixer.init()
+        
         self.image = pygame.image.load('./imgs/lychee_bomb.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -18,6 +18,7 @@ class LycheeBomb(Plant):
         
 
     def explodesound(self):
+        mixer.init()
         self.explode_sound = mixer.Sound("./sounds/Explosion+3.wav")
         pygame.mixer.Sound.set_volume(self.explode_sound, 0.3)
         self.explode_sound.play()
