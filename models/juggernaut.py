@@ -2,7 +2,6 @@ import pygame
 from .zombie import Zombie
 
 class Juggernaut(Zombie):
-    """Each Juggernaut has 10000HP multiplied by thier level (level * 0.1) """
     def __init__(self,x,y, MainGame, MainView):
         super(Juggernaut, self).__init__(MainGame, MainView)
         self.image = pygame.image.load('./imgs/juggernaut.png')
@@ -26,7 +25,6 @@ class Juggernaut(Zombie):
             if pygame.sprite.collide_rect(self,plant):
                 self.stop = True
                 self.eat_plant(plant)
-
 
     def eat_plant(self,plant):
         plant.hp -= self.damage

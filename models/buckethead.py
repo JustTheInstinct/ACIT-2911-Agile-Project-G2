@@ -14,12 +14,13 @@ class Buckethead(Zombie):
         self.speed = 1
         self.live = True
         self.stop = False
+        self.head = True
 
     def losehead(self):
-        if self.hp == 400:
+        if self.hp <= 400:
             self.image = pygame.image.load('./imgs/losehead.png')
+            self.head = False
 
-            
     def move_zombie(self):
         if self.live and not self.stop:
             self.rect.x -= self.speed
