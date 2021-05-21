@@ -29,7 +29,7 @@ class GameController(PygameController):
         self.button_sound = mixer.Sound("./sounds/mode.mp3")
         pygame.mixer.Sound.set_volume(self.button_sound, 0.1)
         pygame.mixer.Sound.set_volume(self.plant_sound, 0.1)
-        pygame.mixer.Sound.set_volume(self.background_sound, 0.005)
+        pygame.mixer.Sound.set_volume(self.background_sound, 0.08)
         pygame.mixer.Sound.set_volume(self.day_sound, 0.1)
         pygame.mixer.Sound.set_volume(self.night_sound, 0.1)
         pygame.mixer.Sound.set_volume(self.credit_sound, 0.1)
@@ -226,6 +226,7 @@ class GameController(PygameController):
     def hard_mode(self):
         """alow players change difficulty level of the game"""
         waiting = True
+        print(1)
         while waiting:
             self.MainView.display_mode()
             for event in pygame.event.get():
@@ -326,7 +327,7 @@ class GameController(PygameController):
             if self.count_zombie == self.produce_zombie:
                 self.init_zombies()
                 self.count_zombie = 0
-            if self.difficulty == 2 and self.level > 2 and self.level % 2 == 0 and self.count_jug != 1:
+            if self.difficulty == 2 and self.level > 1 and self.level % 2 == 0 and self.count_jug != 1:
                 self.init_juggernut()
                 self.count_jug = 1
 

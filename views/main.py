@@ -90,6 +90,7 @@ class MainView:
 
     def display_mode(self):
         diff_img =  pygame.image.load('./imgs/difficulty.png')
+
         self.window.blit(diff_img, (0,0))
         easy = self.draw_text(f'Easy: Less zombie, 400 start gold', 30, (255, 255, 255))
         normal = self.draw_text(f'Normal: More zombie, 200 start gold', 30, (255, 255, 0))
@@ -107,6 +108,7 @@ class MainView:
             mode = "Normal"
             activated = self.draw_text(f'{mode} mode is activated', 55, (255, 255, 0))
         self.window.blit(activated, (220, 430))
+        pygame.display.flip()
     
     def display_menu(self):
         self.window = pygame.display.set_mode([800, 560])
