@@ -7,6 +7,7 @@ class maing():
         self.hp = 100
         self.score = 0
         self.remnant_score = 40
+        self.difficulty = 1
 mg = maing(0)
 def test_sunflower_att():
     new_sf = Sunflower(1,9,mg,'mainview')

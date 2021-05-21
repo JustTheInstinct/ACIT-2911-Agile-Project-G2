@@ -26,9 +26,14 @@ class MainView:
         pygame.display.update()
 
     def display_stat(self):
-        self.window.blit(self.draw_text('Gold$:{}  , Level:{} , Score:{}'.format(self.MainGame.money,self.MainGame.level, self.MainGame.score), 26, (0, 0, 0)), (1000, 40))
-        self.window.blit(self.draw_text(
-            'You need {} points to reach next level'.format(self.MainGame.remnant_score), 26, (0, 0, 0)), (1000, 60))
+        if self.MainGame.difficulty == 2:
+            self.window.blit(self.draw_text('Gold$:{}  , Level:{} , Score:{}'.format(self.MainGame.money,self.MainGame.level, self.MainGame.score), 26, (255, 255, 0)), (1000, 40))
+            self.window.blit(self.draw_text(
+                'You need {} points to reach next level'.format(self.MainGame.remnant_score), 26, (255, 255, 0)), (1000, 60))
+        else:
+            self.window.blit(self.draw_text('Gold$:{}  , Level:{} , Score:{}'.format(self.MainGame.money,self.MainGame.level, self.MainGame.score), 26, (0, 0, 0)), (1000, 40))
+            self.window.blit(self.draw_text(
+                'You need {} points to reach next level'.format(self.MainGame.remnant_score), 26, (0, 0, 0)), (1000, 60))
 
     def display_plants(self):
         for plant in self.MainGame.plants_list:

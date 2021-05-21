@@ -1,24 +1,31 @@
 import pygame
 from .zombie import Zombie
 
-class Juggernaut(Zombie):
+
+class Screenzombie(Zombie):
     def __init__(self,x,y, MainGame, MainView):
-        super(Juggernaut, self).__init__(MainGame, MainView)
-        self.image = pygame.image.load('./imgs/gargantuar.png')
+        super(Screenzombie, self).__init__(MainGame, MainView)
+        self.image = pygame.image.load('./imgs/screen.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.hp = 5000
-        self.damage = 2000
-        self.speed = 0.6
+        self.hp = 1400
+        self.damage = 2
+        self.speed = 1
         self.live = True
         self.stop = False
+        self.door = True
+
+    def dropdoor(self):
+        if self.hp <= 700:
+            self.image = pygame.image.load('./imgs/zombie.png')
+            self.door = False
 
     def move_zombie(self):
         if self.live and not self.stop:
             self.rect.x -= self.speed
             if self.rect.x < 220:
-                self.MainGame.GAMEOVER = True
+                self.MainGame.GAMEOVER  = True
 
     def hit_plant(self):
         for plant in self.MainGame.plants_list:

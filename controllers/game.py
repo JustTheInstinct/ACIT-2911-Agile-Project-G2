@@ -1,5 +1,5 @@
 from controllers.base import PygameController
-from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut
+from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, conehead, newspaper, screenzombie
 from views import MainView
 import webbrowser, pygame, uuid, random, csv
 from pygame import mixer
@@ -52,15 +52,15 @@ class GameController(PygameController):
         self.zombie_list = []
         self.count_zombie = 0
         self.count_jug = 0
-        self.produce_zombie = 500
+        self.produce_zombie = 300
         self.produce_jug = 4
         self.GAMEOVER  = False
         if self.difficulty == 0:
             self.money = 400
-            self.produce_zombie = 600
+            self.produce_zombie = 200
         elif self.difficulty == 2:
             self.money = 200
-            self.produce_zombie = 400
+            self.produce_zombie = 100
 
     def init_plant_points(self):
         """Create coordination"""
@@ -81,30 +81,24 @@ class GameController(PygameController):
             self.grid_list.append(column_grid_list)
 
     def init_juggernut(self):
-        juggernaut = Juggernaut(1500, 240, self, self.MainView)
+        i = random.randint(1,6)
+        juggernaut = Juggernaut(1500, i * 80, self, self.MainView)
         self.zombie_list.append(juggernaut)
-
+        
     def init_zombies(self):
         """Spawn zombies"""
-        time_count = 0
         for i in range(1, 7):
-            normaldis = random.randint(1,3) * 200
-            normalzombie = Norzombie(1000+ normaldis, i * 80, self, self.MainView)
-            bucketdis = random.randint(4,6) * 200
-            buckethead = Buckethead(1000 + bucketdis, i * 80, self, self.MainView)
-            newsdis = random.randint(3,6) * 100
-            newspaper = Newspaper(1000 + newsdis, i * 80, self, self.MainView)
-            news = time_count // 5
-            buck = time_count // 10
-            if news != 0 or buck != 0 or time_count == 0:
-                self.zombie_list.append(normalzombie)
-                time_count += 1
-            if news == 0:
-                self.zombie_list.append(newspaper)
-                time_count += 1
-            if buck // 10 == 0:
-                self.zombie_list.append(buckethead)
-                time_count += 2
+            distance = random.randint(1,60) * 10
+            normalzombie = Norzombie(1000+ distance, i * 80, self, self.MainView)
+            buckethead = Buckethead(1000+ distance, i * 80, self, self.MainView)
+            conehead = Conehead(1000+ distance, i * 80, self, self.MainView)
+            screen = Screenzombie(1000+ distance, i * 80, self, self.MainView)
+            newspaper = Newspaper(1000+ distance, i * 80, self, self.MainView)
+            zombie_type = [normalzombie,buckethead,newspaper,conehead,screen]
+            # if len(self.zombie_list) < 40:
+            self.zombie_list.append(random.choice(zombie_type))
+
+
 
 ###------- load game unit ------------------------------
 
@@ -133,6 +127,10 @@ class GameController(PygameController):
                     zombie.losehead()
                 if isinstance(zombie, Newspaper):
                     zombie.losepaper()
+                if isinstance(zombie, Conehead):
+                    zombie.losecone()
+                if isinstance(zombie, Screenzombie):
+                    zombie.dropdoor()
                 zombie.move_zombie()
                 zombie.hit_plant()
             else:
@@ -226,7 +224,6 @@ class GameController(PygameController):
     def hard_mode(self):
         """alow players change difficulty level of the game"""
         waiting = True
-        print(1)
         while waiting:
             self.MainView.display_mode()
             for event in pygame.event.get():

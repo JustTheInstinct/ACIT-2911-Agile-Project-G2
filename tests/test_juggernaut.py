@@ -8,6 +8,7 @@ class maing():
         self.score = 0
         self.remnant_score = 40
         self.GAMEOVER  = False
+        self.difficulty = 2
 
 mg = maing(0)
 new_jug = Juggernaut(5, 1, mg, 'mainview')
