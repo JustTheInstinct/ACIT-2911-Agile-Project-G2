@@ -1,3 +1,4 @@
+from models.chomper import Chomper
 from controllers.base import PygameController
 from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, conehead, newspaper, screenzombie
 from views import MainView
@@ -95,7 +96,6 @@ class GameController(PygameController):
             screen = Screenzombie(1000+ distance, i * 80, self, self.MainView)
             newspaper = Newspaper(1000+ distance, i * 80, self, self.MainView)
             zombie_type = [normalzombie,buckethead,newspaper,conehead,screen]
-            # if len(self.zombie_list) < 40:
             self.zombie_list.append(random.choice(zombie_type))
 
 
@@ -116,6 +116,8 @@ class GameController(PygameController):
                     plant.explode()
                 elif isinstance(plant, Wallnut):
                     plant.crack()
+                elif isinstance(plant, Chomper):
+                    plant.eat()
             else:
                 self.plants_list.remove(plant)
 
@@ -393,6 +395,15 @@ class GameController(PygameController):
                             self.plants_list.append(lychee)
                             grid.can_grow = False
                             self.money -= 150
+
+                    if e.key == pygame.K_6: #create Lychee Bomb
+                        condition = grid.can_grow and self.money >= 60
+                        if condition:
+                            self.plant_sound.play()
+                            chomper = Chomper(grid.position[0], grid.position[1], self, self.MainView)
+                            self.plants_list.append(chomper)
+                            grid.can_grow = False
+                            self.money -= 60
 
     def save_score(self):
         """save players score"""

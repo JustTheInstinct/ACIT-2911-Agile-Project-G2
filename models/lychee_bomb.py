@@ -2,11 +2,12 @@ from .plant import Plant
 from .explode import Explode
 from .lychee_spike import LycheeSpike
 import pygame
+from pygame import mixer
 
 class LycheeBomb(Plant):
     def __init__(self,x,y, MainGame, MainView):
         super(LycheeBomb, self).__init__(MainGame, MainView)
-
+        mixer.init()
         self.image = pygame.image.load('./imgs/lychee_bomb.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -14,6 +15,12 @@ class LycheeBomb(Plant):
         self.price = 175
         self.hp = 200
         self.frame_timer = 0
+        
+
+    def explodesound(self):
+        self.explode_sound = mixer.Sound("./sounds/Explosion+3.wav")
+        pygame.mixer.Sound.set_volume(self.explode_sound, 0.3)
+        self.explode_sound.play()
 
     def explode(self):
         should_explode = True
@@ -21,6 +28,7 @@ class LycheeBomb(Plant):
             self.frame_timer += 1
             if self.frame_timer == 27:
                 self.image = pygame.image.load('./imgs/explosion.png')
+                self.explodesound()
                 self.image.get_rect()
                 self.rect.x = self.rect.x - 80
                 self.rect.y = self.rect.y - 80

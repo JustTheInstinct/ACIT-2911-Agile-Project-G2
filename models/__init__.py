@@ -15,3 +15,4 @@ from .newspaper import Newspaper
 from .juggernaut import Juggernaut
 from .conehead import Conehead
 from .screenzombie import Screenzombie
+from .chomper import Chomper

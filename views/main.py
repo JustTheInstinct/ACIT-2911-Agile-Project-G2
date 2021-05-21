@@ -1,4 +1,4 @@
-from models import Sunflower, PeaShooter, SnowPea, Wallnut, LycheeBomb
+from models import Sunflower, PeaShooter, SnowPea, Wallnut, LycheeBomb, Chomper
 import pygame
 
 class MainView:
@@ -48,6 +48,8 @@ class MainView:
                     plant.display_wallnut()
                 elif isinstance(plant, LycheeBomb):
                     plant.display_lychee_bomb()
+                elif isinstance(plant, Chomper):
+                    plant.display_chomper()
 
     def display_icebullets(self):
         for i in self.MainGame.icebullet_list:
