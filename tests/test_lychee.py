@@ -30,8 +30,3 @@ def test_lvl():
 def test_bomb_att():
     new_bomb=LycheeBomb(1,5,mg,'mainview')
     assert new_bomb.rect.x == 1 and new_bomb.rect.y == 5
-
-def test_bomb_exp():
-    new_bomb=LycheeBomb(1,5,mg,'mainview')
-    new_bomb.explode()
-    assert new_bomb.frame_timer == 1 
