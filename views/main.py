@@ -19,6 +19,7 @@ class MainView:
         self.display_lycheespikes()
         self.display_zombies()
         self.display_icebullets()
+        self.display_jug()
 
     def display_update(self):
         pygame.time.wait(10)
@@ -62,6 +63,12 @@ class MainView:
         for zombie in self.MainGame.zombie_list:
             if zombie.live:
                 zombie.display_zombie()
+
+    def display_jug(self):
+        for jug in self.MainGame.jug_list:
+            if jug.live:
+                jug.display_zombie()
+
 
     def display_map(self):
         dayimg =  pygame.image.load('./imgs/day.jpeg')
