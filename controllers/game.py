@@ -82,7 +82,7 @@ class GameController(PygameController):
             self.grid_list.append(column_grid_list)
 
     def init_juggernut(self):
-        i = random.randint(1,6)
+        i = random.randint(2,5)
         juggernaut = Juggernaut(1500, i * 80, self, self.MainView)
         self.zombie_list.append(juggernaut)
         
