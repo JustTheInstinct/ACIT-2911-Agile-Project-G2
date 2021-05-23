@@ -126,9 +126,9 @@ td {
      1px 1px 0 #000;
 }
 
-.oglink {
+.oglink, .classlink {
+    margin: auto;
     margin-top: 1rem;
-    margin-left: 2rem;
     height: 90%;
     width: 380px;
     background-color: #8FBC8F;
@@ -136,7 +136,7 @@ td {
     padding-left: 0.5rem;
 }
 
-.oglink p {
+.oglink p, .classlink p {
     padding-top: 5px;
     margin-bottom: 5px;
     font-size: 25px;
