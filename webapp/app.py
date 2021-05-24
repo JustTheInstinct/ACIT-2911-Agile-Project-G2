@@ -34,10 +34,10 @@ def get_sql():
     dict_list = []
     for player in rows:
         score_dict = {}
-        score_dict["name"] = player["name"]
-        score_dict["id"] = player["id"]
-        score_dict["level"] = player["level"]
-        score_dict["score"] = player["score"]
+        score_dict["name"] = player[1]
+        score_dict["id"] = player[0]
+        score_dict["level"] = player[2]
+        score_dict["score"] = player[3]
         dict_list.append(score_dict)
     return dict_list
 
