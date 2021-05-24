@@ -2,7 +2,7 @@ from models.chomper import Chomper
 from controllers.base import PygameController
 from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, conehead, newspaper, screenzombie
 from views import MainView
-import webbrowser, pygame, uuid, random, csv
+import webbrowser, pygame, uuid, random, csv, sqlite3
 from pygame import mixer
 
 
@@ -407,10 +407,12 @@ class GameController(PygameController):
 
     def save_score(self):
         """save players score"""
-        with open('./webapp/pvzscore.csv', mode='a+') as player_file:
-            score = csv.writer(player_file, delimiter=',')
-            score.writerow([f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}'])
-            player_file.close()
+        conn = sqlite3.connect('./webapp/pvzscore.db')
+        c = conn.cursor()
+        sql = '''INSERT INTO users (id, name, level, score) VALUES (?, ?, ?, ?)'''
+        val = [f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}']
+        c.execute(sql, val)
+        conn.commit()
 
     def endgame(self):
         """show game over screen and track players actions"""
