@@ -1,31 +1,7 @@
 from flask import Flask, render_template
-import csv, os, pandas
+import os
 from pathlib import Path
 import sqlite3
-def load_scores(filename):
-    with open(filename, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        players = []
-        for line in reader:
-            players.append(line)
-    return players
-
-def process_scores(players):
-    dict_list = []
-    for player in players:
-        score_dict = {}
-        score_dict["name"] = player["name"]
-        score_dict["id"] = player["id"]
-        score_dict["level"] = player["level"]
-        score_dict["score"] = player["score"]
-        dict_list.append(score_dict)
-    return dict_list
-
-def get_scores():
-    filename = 'webapp/pvzscore.csv'
-    data = load_scores(filename)
-    scores = process_scores(data)
-    return scores
 
 def get_sql():
     conn = sqlite3.connect('pvzscore.db')
@@ -60,7 +36,7 @@ def score():
 def player(player_id):
     scores = get_sql()
     for score in scores:
-        if score["id"] == str(player_id):
+        if score["id"] == player_id:
             return render_template("player.html", score = score)
 
 @app.route("/units")
