@@ -418,6 +418,7 @@ class GameController(PygameController):
         val = [f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}']
         # if table not exist
         # c.execute("CREATE TABLE scores (id varchar, name varchar,level integer,score integer)")
+        # if user exist
         c.execute(sql, val)
         conn.commit()
         c.close()

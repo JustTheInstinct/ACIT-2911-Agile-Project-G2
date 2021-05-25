@@ -42,7 +42,7 @@ def score():
 def player(player_id):
     scores = get_sql()
     for score in scores:
-        if score["id"] == player_id:
+        if score["id"] == str(player_id):
             return render_template("player.html", score = score)
 
 @app.route("/units")
