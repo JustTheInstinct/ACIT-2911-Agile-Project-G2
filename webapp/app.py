@@ -4,7 +4,9 @@ from pathlib import Path
 import sqlite3
 
 def get_sql():
-    conn = sqlite3.connect('pvzscore.db')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "pvzscore.db")
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     rows = c.execute('''SELECT * FROM users''').fetchall()
     dict_list = []
