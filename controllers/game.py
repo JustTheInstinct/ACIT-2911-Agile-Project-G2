@@ -2,7 +2,7 @@ from models.chomper import Chomper
 from controllers.base import PygameController
 from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, conehead, newspaper, screenzombie
 from views import MainView
-import webbrowser, pygame, uuid, random, csv, sqlite3
+import webbrowser, pygame, uuid, random , psycopg2
 from pygame import mixer
 
 
@@ -407,10 +407,18 @@ class GameController(PygameController):
 
     def save_score(self):
         """save players score"""
-        conn = sqlite3.connect('./webapp/pvzscore.db')
+        conn = psycopg2.connect(
+        host="ec2-54-152-185-191.compute-1.amazonaws.com",
+        database="d92mgnjut4mfd1",
+        user="bpfvqodctmlkfk",
+        port="5432",
+        password="2e2c399974dd83b5ac8664d0fbe7e0f6c2aad1e335b3d5e2948579fd5e5e0fca")
         c = conn.cursor()
-        sql = '''INSERT INTO users (id, name, level, score) VALUES (?, ?, ?, ?)'''
+        sql = '''INSERT INTO users (id, name, level, score) 
+                 VALUES (%s, %s, %s, %s)'''
         val = [f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}']
+        
+        c. execute("CREATE TABLE users (id integer PRIMARY KEY, name varchar,level integer,score integer)")
         c.execute(sql, val)
         conn.commit()
 

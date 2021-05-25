@@ -1,12 +1,17 @@
 from flask import Flask, render_template
 import os
-from pathlib import Path
-import sqlite3
+import psycopg2
+
+
+app = Flask(__name__)
 
 def get_sql():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "pvzscore.db")
-    conn = sqlite3.connect(db_path)
+    conn = psycopg2.connect(
+        host="ec2-54-152-185-191.compute-1.amazonaws.com",
+        database="d92mgnjut4mfd1",
+        user="bpfvqodctmlkfk",
+        port="5432",
+        password="2e2c399974dd83b5ac8664d0fbe7e0f6c2aad1e335b3d5e2948579fd5e5e0fca")
     c = conn.cursor()
     rows = c.execute('''SELECT * FROM users''').fetchall()
     dict_list = []
@@ -18,8 +23,6 @@ def get_sql():
         score_dict["score"] = player[3]
         dict_list.append(score_dict)
     return dict_list
-
-app = Flask(__name__)
 
 @app.route("/")
 def home():
