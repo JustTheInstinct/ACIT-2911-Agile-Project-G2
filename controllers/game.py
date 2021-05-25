@@ -414,13 +414,14 @@ class GameController(PygameController):
         port="5432",
         password="2e2c399974dd83b5ac8664d0fbe7e0f6c2aad1e335b3d5e2948579fd5e5e0fca")
         c = conn.cursor()
-        sql = '''INSERT INTO users (id, name, level, score) 
-                 VALUES (%s, %s, %s, %s)'''
+        sql = "INSERT INTO scores (id, name, level, score) VALUES (%s, %s, %s, %s)"
         val = [f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}']
-        
-        c. execute("CREATE TABLE users (id integer PRIMARY KEY, name varchar,level integer,score integer)")
+        # if table not exist
+        # c.execute("CREATE TABLE scores (id varchar, name varchar,level integer,score integer)")
         c.execute(sql, val)
         conn.commit()
+        c.close()
+        conn.close()
 
     def endgame(self):
         """show game over screen and track players actions"""
