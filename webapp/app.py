@@ -13,7 +13,8 @@ def get_sql():
         port="5432",
         password="2e2c399974dd83b5ac8664d0fbe7e0f6c2aad1e335b3d5e2948579fd5e5e0fca")
     c = conn.cursor()
-    rows = c.execute('''SELECT * FROM users''').fetchall()
+    c.execute("SELECT * FROM users;")
+    rows = c.fetchall()
     dict_list = []
     for player in rows:
         score_dict = {}
