@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
     <div class='description'>
-        Welcome to Group 2's Agile Development project!
+        <h1>Welcome to Group 2's Agile Development project!</h1>
         <p>This is an alternate version of the popular Plants vs Zombies game, using python.  
            There are 3 difficulty levels: easy, normal, and hard, with the hard difficulty featuring a night-time background.
            Our version features both plants and zombies that didn't make it into the original - check them out on the units page!  
@@ -9,18 +9,31 @@
         </p>
     </div>
     <div class='description'>
-        What is Plants vs Zombies?
+        <h1>What is Plants vs Zombies?</h1>
         <p>Plants vs Zombies, or PvZ for short, is a "tower-defense" game in which the player must defend their home from zombies by placing plants on their lawn.
            These plants can perform a variety of different functions, from shooting projectiles at the zombies to generating gold for more plants or simply obstructing the zombies' paths.
         </p>
     </div>
+
+    <div class='boxes'>
     <div class='oglink'>
-        <p>Click to check out the official games!</p>
+        <h1>Enter your user name to check your score</h1>
+        <img src="../static/images/highscore.png" alt="highscore">
+        <form class='form' method = "post">
+            <input type="text" class="username" name="username" size>
+            <input type="submit" class="searchbutton" value="Search">
+        </form>
+    </div>
+
+    <div class='oglink'>
+        <h1>Click to check out the official games!</h1>
         <a href="https://www.ea.com/ea-studios/popcap/plants-vs-zombies"><img src="../static/images/og_pvz.png" alt="original game site"></a>
     </div>
-    <div class='classlink'>
-        <p>Our course:</p>
+
+    <div class='oglink'>
+        <h1>Click to check out the Our course info!</h1>
         <a href="https://www.bcit.ca/outlines/20211086055/"><img src="../static/images/bcit_logo.png" alt="bcit course site"></a>
+    </div>
     </div>
 </body>
 </html>

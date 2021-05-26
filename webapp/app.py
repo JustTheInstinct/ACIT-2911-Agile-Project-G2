@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 import psycopg2
 
@@ -25,8 +25,15 @@ def get_sql():
         dict_list.append(score_dict)
     return dict_list
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        username = request.form['username']
+        print(username)
+        scores = get_sql()
+        for score in scores:
+            if score["name"] == username:
+                return render_template("player.html", score = score)
     return render_template("home.html")
 
 @app.route("/about")
@@ -38,11 +45,11 @@ def score():
     scores = get_sql()
     return render_template("scoreboard.html", scores = scores)
 
-@app.route("/scoreboard/<int:player_id>")
-def player(player_id):
+@app.route("/scoreboard/<string:player_name>")
+def player(player_name):
     scores = get_sql()
     for score in scores:
-        if score["id"] == str(player_id):
+        if score["name"] == player_name:
             return render_template("player.html", score = score)
 
 @app.route("/units")

@@ -126,7 +126,47 @@ td {
      1px 1px 0 #000;
 }
 
+.boxes {
+    display: grid;
+    position: relative;
+    top:200px;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: auto;
+    width: 100vw;
+}
+.form{
+    padding: 0;
+    display: grid;
+    height:100px;
+    grid-column-gap:0;
+    grid-auto-flow: column;
+
+}
+.username {
+    width:200px;
+    height:30px
+}
+.searchbutton {
+    width:100px;
+    height:35px
+}
+
+.searchbox {
+    position: relative;
+    top: 100px;
+    right: 500px;
+    margin: auto;
+    margin-top: 1rem;
+    height: 90%;
+    width: 370px;
+    background-color: #8FBC8F;
+    border: 2px solid black;
+    padding-left: 0.5rem;
+}
+
 .oglink {
+    position: relative;
+    bottom: 220px;
     margin: auto;
     margin-top: 1rem;
     height: 90%;
@@ -137,6 +177,9 @@ td {
 }
 
 .classlink {
+    position: relative;
+    bottom: 620px;
+    left: 500px;
     margin: auto;
     margin-top: 1rem;
     height: 90%;
