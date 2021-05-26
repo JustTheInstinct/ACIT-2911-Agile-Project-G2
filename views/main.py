@@ -92,7 +92,7 @@ class MainView:
         return text
 
     def display_help_text(self):
-        text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 60, (255, 0, 0))
+        text1 = self.draw_text(f'Welcome back {self.MainGame.username}', 40, (255, 0, 0))
         self.window.blit(text1, (1000, 5))
 
     def display_mode(self):
