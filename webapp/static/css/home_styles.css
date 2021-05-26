@@ -141,12 +141,12 @@ td {
 
 .username {
     width:200px;
-    height:30px
+    height:30px;
 }
 
 .searchbutton {
     width:100px;
-    height:35px
+    height:35px;
 }
 
 .box {
@@ -157,18 +157,6 @@ td {
     background-color: #8FBC8F;
     border: 2px solid black;
     padding-left: 0.5rem;
-}
-
-.oglink p, .classlink p {
-    padding-top: 5px;
-    margin-bottom: 5px;
-    font-size: 25px;
-    text-shadow:
-     1px 2px 0 #000,
-    -1px -1px 0 #000,  
-     1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
 }
 
 .scoreboardHeader {
