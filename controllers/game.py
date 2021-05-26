@@ -1,8 +1,8 @@
 from models.chomper import Chomper
 from controllers.base import PygameController
-from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, conehead, newspaper, screenzombie
+from models import Map, Sunflower, PeaShooter, Norzombie, SnowPea, Wallnut, Buckethead, LycheeBomb, Newspaper, Juggernaut, Conehead, Screenzombie, Database
 from views import MainView
-import webbrowser, pygame, uuid, random , psycopg2
+import webbrowser, pygame, uuid, random
 from pygame import mixer
 
 
@@ -19,6 +19,7 @@ class GameController(PygameController):
         self.MainView = MainView(self)
         self.muted = False
         self.create_sound()
+        self.database = Database(self)
 
     def create_sound(self):
         self.plant_sound = mixer.Sound("./sounds/plant.wav")
@@ -405,49 +406,10 @@ class GameController(PygameController):
                             grid.can_grow = False
                             self.money -= 60
 
-    def save_score(self):
-        """save players score"""
-        conn = psycopg2.connect(
-        host="ec2-54-152-185-191.compute-1.amazonaws.com",
-        database="d92mgnjut4mfd1",
-        user="bpfvqodctmlkfk",
-        port="5432",
-        password="2e2c399974dd83b5ac8664d0fbe7e0f6c2aad1e335b3d5e2948579fd5e5e0fca")
-        c = conn.cursor()
-
-        #check if table exist, if not create table
-        c.execute("select * from information_schema.tables where table_name=%s", ('scores',))
-        if bool(c.rowcount) == False:
-            c.execute("CREATE TABLE scores (id varchar, name varchar,level integer,score integer)")
-
-        # check user exist, if exist, update score and level
-        usercheck = """select * from scores where name = %s"""
-        c.execute(usercheck, (self.username,))
-        if bool(c.rowcount) != False:
-            checkhistory = "select score from scores where name = %s"
-            username = [f'{self.username}']
-            c.execute(checkhistory,username)
-            oldrecord = c.fetchone()
-            if self.score > oldrecord[0]:
-                updatescore = "UPDATE scores SET level = %s, score = %s where name = %s"
-                selfscore =[f'{self.level}', f'{self.score}', f'{self.username}']
-                c.execute(updatescore, selfscore)
-                conn.commit()
-
-        # create new record if user not exist
-        else:
-            sql = "INSERT INTO scores (id, name, level, score) VALUES (%s, %s, %s, %s)"
-            val = [f'{self.id}', f'{self.username}', f'{self.level}', f'{self.score}']
-            c.execute(sql, val)
-            conn.commit()
-        
-        c.close()
-        conn.close()
-
     def endgame(self):
         """show game over screen and track players actions"""
         self.GAMEOVER = True
-        self.save_score()
+        self.database.savescore()
         self.night_sound.stop()
         self.day_sound.stop()
         self.end_sound.play(0)

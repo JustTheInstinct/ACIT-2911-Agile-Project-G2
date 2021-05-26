@@ -4,7 +4,7 @@ from .flower import Sunflower
 from .map import Map
 from .shooter import PeaShooter
 from .zombie import  Zombie
-from .gamestate import GameState
+from .dbmanager import Database
 from .snowpea import SnowPea
 from .lychee_bomb import LycheeBomb
 from .lychee_spike import LycheeSpike
