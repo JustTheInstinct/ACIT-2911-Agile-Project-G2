@@ -21,7 +21,7 @@ Nicholas Chu
 
 This game is only for Agile Project practice use.
 Please contact us if you think we infringe your copyright.
-
+Our website: https://acit-2911-agile-project-g2.herokuapp.com/
 
 Running enviroument:
 Python 3.9.0
